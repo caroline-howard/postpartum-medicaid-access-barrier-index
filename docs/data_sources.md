@@ -8,6 +8,7 @@ This file documents the planned source inventory for the Medicaid Access Barrier
 - Article: "A dataset of geocoded Medicaid office locations in the United States"
 - DOI: `10.7910/DVN/AVRHMI`
 - Expected file: `data/raw/medicaid_offices.xlsx`
+- First cleaned analytic file: `data/processed/medicaid_offices_clean.csv`
 - Purpose: Core office location dataset
 - Key fields: state, address, latitude, longitude
 - Expected columns: `state_fips`, `state_name`, `agency_name`, `street1`, `street2`, `city`, `state`, `zip_code`, `latitude`, `longitude`
