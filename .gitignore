@@ -4,6 +4,7 @@ __pycache__/
 
 data/raw/*
 data/processed/*
+data/manual/county_OBstat_2010_2024.xlsx
 data/manual/NCHSurb-rural-codes.csv
 outputs/*
 
@@ -15,4 +16,5 @@ outputs/*
 !outputs/offices_without_county_match.csv
 !outputs/acs_access_indicators_summary.md
 !outputs/county_office_access_base_summary.md
+!outputs/obstetric_care_status_summary.md
 !outputs/rural_urban_classification_summary.md
