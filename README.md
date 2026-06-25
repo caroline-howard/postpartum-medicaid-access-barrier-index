@@ -24,7 +24,7 @@ Where may in-person Medicaid enrollment support be limited relative to populatio
 
 ## Current Project Status
 
-Initial repository setup. This project currently contains the planned folder structure and documentation placeholders only. Data acquisition, cleaning, spatial joins, index development, and Power BI report construction have not started yet.
+Data-processing scaffolding is underway. Current scripts clean the Medicaid office dataset, assign offices to counties, build a complete 50-state/D.C. county office access base, add ACS access-barrier indicators, and add NCHS rural-urban classification. CMS enrollment, access-barrier index development, and Power BI report construction have not started yet.
 
 ## Data Source Setup
 
@@ -39,7 +39,7 @@ Raw data should remain unchanged. Cleaning, county spatial joins, access-barrier
 3. County-assigned office file: `data/processed/medicaid_offices_with_county.csv`
 4. Complete county office access base table: `data/processed/county_office_access_base.csv`
 5. ACS county access-barrier indicators: `data/processed/acs_county_access_indicators.csv`
-6. Future step: add rural-urban classification
+6. Rural-urban classification: `data/processed/rural_urban_county_classification.csv`
 7. Future step: build access-barrier index
 8. Future step: build Power BI report
 
@@ -48,4 +48,4 @@ Raw data should remain unchanged. Cleaning, county spatial joins, access-barrier
 - The project will identify potential geographic and administrative access barriers; it will not claim that office availability causes Medicaid enrollment outcomes.
 - The Medicaid office dataset is a point-in-time public dataset and should not be presented as a live office locator.
 - County-level indicators may hide important within-county variation, especially in large rural counties and dense urban counties.
-- The first project milestone does not include raw data files, processed datasets, or analytic outputs.
+- Processed datasets are generated locally and are not committed to the repository.

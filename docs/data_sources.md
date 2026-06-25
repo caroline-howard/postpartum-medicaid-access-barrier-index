@@ -42,9 +42,14 @@ This file documents the planned source inventory for the Medicaid Access Barrier
 
 ## E. Rural-Urban Classification
 
-- Source: NCHS Urban-Rural Classification, RUCA, or USDA rural-urban data
-- Purpose: Identify rural counties and compare access barriers by geography
-- Status: Not added yet
+- Source: NCHS 2023 Urban-Rural Classification Scheme for Counties
+- Source page: `https://www.cdc.gov/nchs/data-analysis-tools/urban-rural.html`
+- Source file: `https://www.cdc.gov/nchs/data/data-analysis/NCHSurb-rural-codes.csv`
+- Purpose: Compare Medicaid office access patterns by urban-rural county type.
+- Fields added: `nchs_urban_rural_code`, `nchs_urban_rural_category`, and `metro_nonmetro_flag`.
+- Categories: Large central metro, large fringe metro, medium metro, small metro, micropolitan, and noncore.
+- Limitation: County-level rurality may hide within-county variation, especially in large rural counties and mixed urban-suburban counties.
+- Status: Added by `scripts/06_add_rural_urban_classification.py`
 
 ## F. Optional Social Vulnerability Index
 
