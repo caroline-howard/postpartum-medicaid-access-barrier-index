@@ -1,6 +1,6 @@
 # Data Sources
 
-This file documents the planned source inventory for the Postpartum Medicaid Access Barriers Power BI project. Raw data files should remain unchanged in `data/raw/`; cleaning and derived outputs should be created by scripts in later milestones.
+This file documents the source inventory for the Postpartum Medicaid Access Barriers Power BI project. Raw data files should remain unchanged in `data/raw/`; cleaning and derived outputs are created by scripts.
 
 ## A. Medicaid Office Locations
 
@@ -13,7 +13,7 @@ This file documents the planned source inventory for the Postpartum Medicaid Acc
 - Key fields: state, address, latitude, longitude
 - Expected columns: `state_fips`, `state_name`, `agency_name`, `street1`, `street2`, `city`, `state`, `zip_code`, `latitude`, `longitude`
 - Limitation: Point-in-time dataset current as of late 2023; not a live office locator
-- Status: Not added yet
+- Status: Added; cleaned by `scripts/02_clean_medicaid_offices.py` and assigned to counties by `scripts/03_assign_offices_to_counties.py`
 
 ## B. County Boundaries
 
@@ -27,7 +27,7 @@ This file documents the planned source inventory for the Postpartum Medicaid Acc
 
 ## C. ACS County Indicators
 
-- Source: American Community Survey 5-year county-level data through the Census API; `scripts/05_add_acs_access_indicators.py` discovers the most recent available ACS 5-year vintage at run time.
+- Source: American Community Survey 2024 5-year county-level data through the Census API.
 - Purpose: Add county-level poverty, no-vehicle household, internet subscription, limited-English, older adult, disability, and race/ethnicity context indicators to the county office access base table for postpartum access-barrier screening.
 - Indicators added: total population, poverty count/rate, no-vehicle households/rate, households without internet subscription/rate, limited-English-speaking households/rate, population age 65+/rate, disability count/rate, female population ages 15-44 count/rate, and race/ethnicity context rates.
 - Postpartum context note: Female population ages 15-44 is included as a postpartum-relevant reproductive-age population context measure.
@@ -37,9 +37,9 @@ This file documents the planned source inventory for the Postpartum Medicaid Acc
 ## D. CMS Medicaid Enrollment
 
 - Source: Medicaid.gov or CMS Medicaid/CHIP enrollment data
-- Purpose: State-level Medicaid enrollment context for interpreting the broader program environment.
-- Note: State-level Medicaid enrollment may provide context but does not directly identify postpartum Medicaid enrollees. County-level Medicaid enrollment may not be consistently available nationally.
-- Status: Not added yet
+- Purpose: Optional state-level Medicaid enrollment context for interpreting the broader program environment.
+- Note: State-level Medicaid enrollment may provide context but does not directly identify postpartum Medicaid enrollees. County-level Medicaid enrollment may not be consistently available nationally, and CMS enrollment data are not needed for the first county-level index.
+- Status: Not added yet; optional state-level context only
 
 ## E. Rural-Urban Classification
 
@@ -55,9 +55,9 @@ This file documents the planned source inventory for the Postpartum Medicaid Acc
 ## F. Optional Social Vulnerability Index
 
 - Source: CDC/ATSDR SVI
-- Purpose: Optional composite vulnerability context
-- Note: Use only if it adds value and does not duplicate ACS indicators
-- Status: Not added yet
+- Purpose: Deferred comparison or context layer.
+- Note: SVI is not included in the first version of the Potential Postpartum Medicaid Administrative Access Barrier Index because the project already uses transparent ACS-derived indicators for poverty, transportation access, disability, language access, age, and race/ethnicity context. SVI may be added later as a comparison/context layer. Including SVI and its component-like ACS measures in the same index could overweight similar vulnerability domains.
+- Status: Deferred; not included in first index version
 
 ## G. Hospital-Based Obstetric Care Status
 
@@ -66,6 +66,6 @@ This file documents the planned source inventory for the Postpartum Medicaid Acc
 - Source page: `https://rhrc.umn.edu/publication/2010-2024-county-level-hospital-based-obstetric-care-status/`
 - Source file: `https://rhrc.umn.edu/wp-content/uploads/2026/05/county_OBstat_2010_2024.xlsx`
 - Purpose: Identify whether counties have hospital-based obstetric care available.
-- Use in project: Postpartum-specific clinical access context and potential index component.
+- Use in project: Postpartum-specific clinical maternity access context that is distinct from Medicaid administrative and enrollment support access measured by office availability.
 - Limitation: This identifies hospital-based obstetric care status, not all prenatal care, postpartum care, outpatient OB/GYN access, birth centers, doulas, midwives, community health centers, or Medicaid enrollment support.
 - Status: Added by `scripts/07_add_obstetric_care_status.py`
