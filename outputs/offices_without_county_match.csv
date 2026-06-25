@@ -1,0 +1,3 @@
+office_id,state_fips,state_name,agency_name,street1,street2,city,state,zip_code,latitude,longitude,full_address,county_fips,county_name,county_state_abbr
+office_6f744fe06608,12,FLORIDA,Monroe-Marathon Service Center,2796 Overseas Hwy,S-201,Marathon,FL,33050,24.712862191330878,-81.09744756763898,"2796 Overseas Hwy, S-201, Marathon, FL, 33050",,,
+office_50a81132bbcc,51,VIRGINIA,Middlesex County Department of Social Services,2893 General Puller Highway,,Saluda,VA,23149,37.73880231900199,-76.01768368590385,"2893 General Puller Highway, Saluda, VA, 23149",,,
