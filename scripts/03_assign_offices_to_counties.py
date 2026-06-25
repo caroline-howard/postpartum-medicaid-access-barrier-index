@@ -18,6 +18,7 @@ files, or barrier index calculations.
 from __future__ import annotations
 
 import csv
+import math
 import struct
 import zipfile
 from collections import Counter, defaultdict
@@ -40,6 +41,9 @@ UNMATCHED_OUTPUT = PROJECT_ROOT / "outputs" / "offices_without_county_match.csv"
 BOUNDARY_SOURCE_NAME = "U.S. Census cartographic boundary county shapefile"
 BOUNDARY_LAYER = "cb_2025_us_county_500k"
 BOUNDARY_URL = "https://www2.census.gov/geo/tiger/GENZ2025/shp/cb_2025_us_county_500k.zip"
+NEAREST_COUNTY_FALLBACK_THRESHOLD_MILES = 5.0
+KM_PER_MILE = 1.609344
+EARTH_RADIUS_MILES = 3958.7613
 
 STATE_FIPS_TO_ABBR = {
     "01": "AL",
@@ -211,6 +215,71 @@ def point_in_polygon(lon: float, lat: float, polygon: list[list[list[float]]]) -
     return inside
 
 
+def haversine_miles(lon1: float, lat1: float, lon2: float, lat2: float) -> float:
+    lon1_rad = math.radians(lon1)
+    lat1_rad = math.radians(lat1)
+    lon2_rad = math.radians(lon2)
+    lat2_rad = math.radians(lat2)
+    dlon = lon2_rad - lon1_rad
+    dlat = lat2_rad - lat1_rad
+    a = (
+        math.sin(dlat / 2) ** 2
+        + math.cos(lat1_rad) * math.cos(lat2_rad) * math.sin(dlon / 2) ** 2
+    )
+    return 2 * EARTH_RADIUS_MILES * math.asin(math.sqrt(a))
+
+
+def point_to_segment_distance_miles(
+    lon: float,
+    lat: float,
+    start: list[float],
+    end: list[float],
+) -> float:
+    start_lon, start_lat = start
+    end_lon, end_lat = end
+    mean_lat_rad = math.radians((lat + start_lat + end_lat) / 3)
+
+    point_x = lon * math.cos(mean_lat_rad)
+    point_y = lat
+    start_x = start_lon * math.cos(mean_lat_rad)
+    start_y = start_lat
+    end_x = end_lon * math.cos(mean_lat_rad)
+    end_y = end_lat
+
+    dx = end_x - start_x
+    dy = end_y - start_y
+    if dx == 0 and dy == 0:
+        return haversine_miles(lon, lat, start_lon, start_lat)
+
+    t = ((point_x - start_x) * dx + (point_y - start_y) * dy) / (dx * dx + dy * dy)
+    t = max(0.0, min(1.0, t))
+    nearest_x = start_x + t * dx
+    nearest_y = start_y + t * dy
+    nearest_lon = nearest_x / math.cos(mean_lat_rad) if math.cos(mean_lat_rad) else start_lon
+    nearest_lat = nearest_y
+    return haversine_miles(lon, lat, nearest_lon, nearest_lat)
+
+
+def point_to_ring_distance_miles(lon: float, lat: float, ring: list[list[float]]) -> float:
+    if not ring:
+        return float("inf")
+    distances = []
+    for index, start in enumerate(ring):
+        end = ring[(index + 1) % len(ring)]
+        distances.append(point_to_segment_distance_miles(lon, lat, start, end))
+    return min(distances)
+
+
+def point_to_polygon_distance_miles(
+    lon: float,
+    lat: float,
+    polygon: list[list[list[float]]],
+) -> float:
+    if point_in_polygon(lon, lat, polygon):
+        return 0.0
+    return min(point_to_ring_distance_miles(lon, lat, ring) for ring in polygon if ring)
+
+
 def download_boundary_zip() -> bytes:
     try:
         with urlopen(BOUNDARY_URL, timeout=90) as response:
@@ -352,6 +421,43 @@ def assign_county(
     return None
 
 
+def nearest_county_candidate(
+    lon: float,
+    lat: float,
+    counties_by_state: dict[str, list[dict[str, Any]]],
+    state_abbr: str,
+) -> tuple[dict[str, Any], float] | None:
+    nearest_county = None
+    nearest_distance = float("inf")
+    for county in counties_by_state.get(state_abbr, []):
+        for polygon in county["polygons"]:
+            distance = point_to_polygon_distance_miles(lon, lat, polygon["rings"])
+            if distance < nearest_distance:
+                nearest_county = county
+                nearest_distance = distance
+
+    if nearest_county is not None:
+        return nearest_county, nearest_distance
+    return None
+
+
+def nearest_county_fallback(
+    lon: float,
+    lat: float,
+    counties_by_state: dict[str, list[dict[str, Any]]],
+    state_abbr: str,
+) -> tuple[dict[str, Any], float] | None:
+    candidate = nearest_county_candidate(lon, lat, counties_by_state, state_abbr)
+    if candidate is None:
+        return None
+    nearest_county, nearest_distance = candidate
+    if (
+        nearest_distance <= NEAREST_COUNTY_FALLBACK_THRESHOLD_MILES
+    ):
+        return nearest_county, nearest_distance
+    return None
+
+
 def write_rows(path: Path, rows: list[dict[str, Any]], fieldnames: list[str]) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     with path.open("w", newline="", encoding="utf-8") as csv_file:
@@ -417,7 +523,8 @@ def build_state_summary(
 
 def write_summary(
     offices_read: int,
-    offices_matched: int,
+    direct_spatial_matches: int,
+    fallback_matches: int,
     unmatched_rows: list[dict[str, str]],
     county_count: int,
     state_count: int,
@@ -426,7 +533,8 @@ def write_summary(
     SUMMARY_OUTPUT.parent.mkdir(parents=True, exist_ok=True)
     run_time = datetime.now().astimezone().isoformat(timespec="seconds")
     unmatched_note = (
-        f"Unmatched offices were written to `{UNMATCHED_OUTPUT.relative_to(PROJECT_ROOT)}`."
+        f"Unmatched offices were written to `{UNMATCHED_OUTPUT.relative_to(PROJECT_ROOT)}` "
+        "with nearest-county distance fields for review."
         if unmatched_rows
         else "No unmatched offices were found, so no unmatched-office file was written."
     )
@@ -440,8 +548,10 @@ def write_summary(
 - Boundary source used: {BOUNDARY_SOURCE_NAME}, {BOUNDARY_LAYER}
 - Boundary file URL: `{BOUNDARY_URL}`
 - Offices read: {offices_read}
-- Offices successfully matched: {offices_matched}
+- Offices matched by direct spatial join: {direct_spatial_matches}
+- Offices matched by nearest-county fallback: {fallback_matches}
 - Offices unmatched: {len(unmatched_rows)}
+- Fallback distance threshold: {NEAREST_COUNTY_FALLBACK_THRESHOLD_MILES} miles ({round(NEAREST_COUNTY_FALLBACK_THRESHOLD_MILES * KM_PER_MILE, 2)} km)
 - Counties with at least one office: {county_count}
 - States/DC represented: {state_count}
 - Date/time run: {run_time}
@@ -456,7 +566,7 @@ def write_summary(
 
 ## Limitations
 
-County assignment uses office latitude/longitude points and Census 2025 cartographic county boundaries. This is appropriate for county-level summaries but does not measure travel distance, within-county access variation, or whether an office serves residents across county or state lines. Boundary vintages may differ from the late-2023 office dataset. Coastal or boundary-edge points may fail to match generalized cartographic polygons; unmatched offices are exported for review instead of being forced into a county.
+County assignment first uses office latitude/longitude points and Census 2025 cartographic county boundaries for a direct point-in-polygon spatial join. For offices that do not fall inside a generalized county polygon, the script applies a conservative nearest-county fallback using the same boundary file only when the nearest county boundary is within {NEAREST_COUNTY_FALLBACK_THRESHOLD_MILES} miles. This is appropriate for county-level summaries but does not measure travel distance, within-county access variation, or whether an office serves residents across county or state lines. Boundary vintages may differ from the late-2023 office dataset. Any offices still unmatched after fallback are exported for review instead of being forced into a county.
 """
     SUMMARY_OUTPUT.write_text(summary, encoding="utf-8")
 
@@ -479,34 +589,98 @@ def main() -> int:
 
     assigned_rows: list[dict[str, str]] = []
     unmatched_rows: list[dict[str, str]] = []
+    direct_spatial_matches = 0
+    fallback_matches = 0
 
     for row in office_rows:
+        output_row = dict(row)
         try:
             lat = float(row.get("latitude", ""))
             lon = float(row.get("longitude", ""))
         except ValueError:
-            unmatched_rows.append(row)
+            output_row.update(
+                {
+                    "county_fips": "",
+                    "county_name": "",
+                    "county_state_abbr": "",
+                    "county_match_method": "unmatched",
+                    "county_match_distance_miles": "",
+                    "county_match_distance_km": "",
+                }
+            )
+            unmatched_rows.append(output_row)
             continue
 
         county = assign_county(lon, lat, counties_by_state, row.get("state", ""))
-        output_row = dict(row)
         if county:
             output_row.update(
                 {
                     "county_fips": county["county_fips"],
                     "county_name": county["county_name"],
                     "county_state_abbr": county["state_abbr"],
+                    "county_match_method": "spatial_join",
+                    "county_match_distance_miles": "0",
+                    "county_match_distance_km": "0",
                 }
             )
             assigned_rows.append(output_row)
+            direct_spatial_matches += 1
         else:
-            output_row.update({"county_fips": "", "county_name": "", "county_state_abbr": ""})
-            unmatched_rows.append(output_row)
+            fallback_candidate = nearest_county_candidate(
+                lon, lat, counties_by_state, row.get("state", "")
+            )
+            fallback = (
+                fallback_candidate
+                if fallback_candidate
+                and fallback_candidate[1] <= NEAREST_COUNTY_FALLBACK_THRESHOLD_MILES
+                else None
+            )
+            if fallback:
+                fallback_county, distance_miles = fallback
+                output_row.update(
+                    {
+                        "county_fips": fallback_county["county_fips"],
+                        "county_name": fallback_county["county_name"],
+                        "county_state_abbr": fallback_county["state_abbr"],
+                        "county_match_method": "nearest_county_fallback",
+                        "county_match_distance_miles": round(distance_miles, 4),
+                        "county_match_distance_km": round(distance_miles * KM_PER_MILE, 4),
+                    }
+                )
+                assigned_rows.append(output_row)
+                fallback_matches += 1
+            else:
+                nearest_distance_miles = fallback_candidate[1] if fallback_candidate else ""
+                nearest_distance_km = (
+                    fallback_candidate[1] * KM_PER_MILE if fallback_candidate else ""
+                )
+                output_row.update(
+                    {
+                        "county_fips": "",
+                        "county_name": "",
+                        "county_state_abbr": "",
+                        "county_match_method": "unmatched",
+                        "county_match_distance_miles": (
+                            round(nearest_distance_miles, 4)
+                            if nearest_distance_miles != ""
+                            else ""
+                        ),
+                        "county_match_distance_km": (
+                            round(nearest_distance_km, 4)
+                            if nearest_distance_km != ""
+                            else ""
+                        ),
+                    }
+                )
+                unmatched_rows.append(output_row)
 
     office_fieldnames = list(office_rows[0].keys()) + [
         "county_fips",
         "county_name",
         "county_state_abbr",
+        "county_match_method",
+        "county_match_distance_miles",
+        "county_match_distance_km",
     ]
     write_rows(OFFICE_COUNTY_OUTPUT, assigned_rows + unmatched_rows, office_fieldnames)
 
@@ -541,7 +715,8 @@ def main() -> int:
     top_states = state_counts.most_common(10)
     write_summary(
         offices_read=len(office_rows),
-        offices_matched=len(assigned_rows),
+        direct_spatial_matches=direct_spatial_matches,
+        fallback_matches=fallback_matches,
         unmatched_rows=unmatched_rows,
         county_count=len(county_counts),
         state_count=len(state_counts),
@@ -550,6 +725,12 @@ def main() -> int:
 
     print(f"Number of offices read: {len(office_rows)}")
     print(f"Number of offices assigned to counties: {len(assigned_rows)}")
+    print(f"Number matched by direct spatial join: {direct_spatial_matches}")
+    print(f"Number matched by nearest-county fallback: {fallback_matches}")
+    print(
+        "Nearest-county fallback threshold: "
+        f"{NEAREST_COUNTY_FALLBACK_THRESHOLD_MILES} miles"
+    )
     print(f"Number of offices not assigned to counties: {len(unmatched_rows)}")
     print(f"Number of counties with at least one office: {len(county_counts)}")
     print(f"Number of states/DC represented: {len(state_counts)}")
