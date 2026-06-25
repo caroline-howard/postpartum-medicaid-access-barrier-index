@@ -22,6 +22,7 @@ This file documents the planned source inventory for the Medicaid Access Barrier
 - Expected use: Spatial join using office latitude/longitude points against county polygons
 - Expected output: County FIPS, county name, and county state abbreviation for each office
 - Limitations: County-level geography supports broad access summaries but can hide within-county travel variation, especially in large rural counties and dense urban counties. Boundary vintages may differ from the office dataset date, and a small number of coastal or boundary-edge points may fail to match generalized cartographic polygons.
+- Manual review note: One office required a documented manual county assignment because generalized county boundaries did not match the point after direct spatial join and nearest-county fallback.
 - Status: Used by `scripts/03_assign_offices_to_counties.py`
 
 ## C. ACS County Indicators

@@ -32,6 +32,7 @@ from urllib.request import urlopen
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 INPUT_FILE = PROJECT_ROOT / "data" / "processed" / "medicaid_offices_clean.csv"
+MANUAL_ASSIGNMENTS_FILE = PROJECT_ROOT / "data" / "manual" / "manual_county_assignments.csv"
 OFFICE_COUNTY_OUTPUT = PROJECT_ROOT / "data" / "processed" / "medicaid_offices_with_county.csv"
 COUNTY_COUNTS_OUTPUT = PROJECT_ROOT / "data" / "processed" / "county_office_counts.csv"
 STATE_SUMMARY_OUTPUT = PROJECT_ROOT / "data" / "processed" / "state_office_summary.csv"
@@ -172,6 +173,17 @@ def read_csv(path: Path) -> list[dict[str, str]]:
         )
     with path.open("r", newline="", encoding="utf-8") as csv_file:
         return list(csv.DictReader(csv_file))
+
+
+def read_manual_assignments(path: Path) -> dict[str, dict[str, str]]:
+    if not path.exists():
+        return {}
+    with path.open("r", newline="", encoding="utf-8") as csv_file:
+        return {
+            row["office_id"]: row
+            for row in csv.DictReader(csv_file)
+            if row.get("office_id")
+        }
 
 
 def ring_bbox(ring: list[list[float]]) -> tuple[float, float, float, float]:
@@ -525,6 +537,7 @@ def write_summary(
     offices_read: int,
     direct_spatial_matches: int,
     fallback_matches: int,
+    manual_matches: int,
     unmatched_rows: list[dict[str, str]],
     county_count: int,
     state_count: int,
@@ -536,7 +549,10 @@ def write_summary(
         f"Unmatched offices were written to `{UNMATCHED_OUTPUT.relative_to(PROJECT_ROOT)}` "
         "with nearest-county distance fields for review."
         if unmatched_rows
-        else "No unmatched offices were found, so no unmatched-office file was written."
+        else (
+            "No unmatched offices were found; "
+            f"`{UNMATCHED_OUTPUT.relative_to(PROJECT_ROOT)}` contains headers only."
+        )
     )
     top_states_text = "\n".join(f"- {state}: {count}" for state, count in top_states)
     summary = f"""# County Assignment Summary
@@ -545,11 +561,13 @@ def write_summary(
 - Office-level output: `{OFFICE_COUNTY_OUTPUT.relative_to(PROJECT_ROOT)}`
 - County count output: `{COUNTY_COUNTS_OUTPUT.relative_to(PROJECT_ROOT)}`
 - State summary output: `{STATE_SUMMARY_OUTPUT.relative_to(PROJECT_ROOT)}`
+- Manual assignment crosswalk: `{MANUAL_ASSIGNMENTS_FILE.relative_to(PROJECT_ROOT)}`
 - Boundary source used: {BOUNDARY_SOURCE_NAME}, {BOUNDARY_LAYER}
 - Boundary file URL: `{BOUNDARY_URL}`
 - Offices read: {offices_read}
 - Offices matched by direct spatial join: {direct_spatial_matches}
 - Offices matched by nearest-county fallback: {fallback_matches}
+- Offices matched by manual review crosswalk: {manual_matches}
 - Offices unmatched: {len(unmatched_rows)}
 - Fallback distance threshold: {NEAREST_COUNTY_FALLBACK_THRESHOLD_MILES} miles ({round(NEAREST_COUNTY_FALLBACK_THRESHOLD_MILES * KM_PER_MILE, 2)} km)
 - Counties with at least one office: {county_count}
@@ -564,15 +582,20 @@ def write_summary(
 
 {unmatched_note}
 
+## Manual Review Crosswalk
+
+Manual county assignments are applied only after direct spatial join and nearest-county fallback fail. The crosswalk is limited to reviewed records in `{MANUAL_ASSIGNMENTS_FILE.relative_to(PROJECT_ROOT)}` and uses `county_match_method = manual_review_crosswalk`.
+
 ## Limitations
 
-County assignment first uses office latitude/longitude points and Census 2025 cartographic county boundaries for a direct point-in-polygon spatial join. For offices that do not fall inside a generalized county polygon, the script applies a conservative nearest-county fallback using the same boundary file only when the nearest county boundary is within {NEAREST_COUNTY_FALLBACK_THRESHOLD_MILES} miles. This is appropriate for county-level summaries but does not measure travel distance, within-county access variation, or whether an office serves residents across county or state lines. Boundary vintages may differ from the late-2023 office dataset. Any offices still unmatched after fallback are exported for review instead of being forced into a county.
+County assignment first uses office latitude/longitude points and Census 2025 cartographic county boundaries for a direct point-in-polygon spatial join. For offices that do not fall inside a generalized county polygon, the script applies a conservative nearest-county fallback using the same boundary file only when the nearest county boundary is within {NEAREST_COUNTY_FALLBACK_THRESHOLD_MILES} miles. Reviewed manual assignments are applied after those automated steps only. This is appropriate for county-level summaries but does not measure travel distance, within-county access variation, or whether an office serves residents across county or state lines. Boundary vintages may differ from the late-2023 office dataset. Any offices still unmatched after fallback and manual review are exported for review instead of being forced into a county.
 """
     SUMMARY_OUTPUT.write_text(summary, encoding="utf-8")
 
 
 def main() -> int:
     office_rows = read_csv(INPUT_FILE)
+    manual_assignments = read_manual_assignments(MANUAL_ASSIGNMENTS_FILE)
     state_fips_values = sorted(
         {
             str(row.get("state_fips", "")).zfill(2)
@@ -591,6 +614,7 @@ def main() -> int:
     unmatched_rows: list[dict[str, str]] = []
     direct_spatial_matches = 0
     fallback_matches = 0
+    manual_matches = 0
 
     for row in office_rows:
         output_row = dict(row)
@@ -654,25 +678,48 @@ def main() -> int:
                 nearest_distance_km = (
                     fallback_candidate[1] * KM_PER_MILE if fallback_candidate else ""
                 )
-                output_row.update(
-                    {
-                        "county_fips": "",
-                        "county_name": "",
-                        "county_state_abbr": "",
-                        "county_match_method": "unmatched",
-                        "county_match_distance_miles": (
-                            round(nearest_distance_miles, 4)
-                            if nearest_distance_miles != ""
-                            else ""
-                        ),
-                        "county_match_distance_km": (
-                            round(nearest_distance_km, 4)
-                            if nearest_distance_km != ""
-                            else ""
-                        ),
-                    }
-                )
-                unmatched_rows.append(output_row)
+                manual_assignment = manual_assignments.get(row.get("office_id", ""))
+                if manual_assignment:
+                    output_row.update(
+                        {
+                            "county_fips": manual_assignment["county_fips"],
+                            "county_name": manual_assignment["county_name"],
+                            "county_state_abbr": manual_assignment["county_state_abbr"],
+                            "county_match_method": "manual_review_crosswalk",
+                            "county_match_distance_miles": (
+                                round(nearest_distance_miles, 4)
+                                if nearest_distance_miles != ""
+                                else ""
+                            ),
+                            "county_match_distance_km": (
+                                round(nearest_distance_km, 4)
+                                if nearest_distance_km != ""
+                                else ""
+                            ),
+                        }
+                    )
+                    assigned_rows.append(output_row)
+                    manual_matches += 1
+                else:
+                    output_row.update(
+                        {
+                            "county_fips": "",
+                            "county_name": "",
+                            "county_state_abbr": "",
+                            "county_match_method": "unmatched",
+                            "county_match_distance_miles": (
+                                round(nearest_distance_miles, 4)
+                                if nearest_distance_miles != ""
+                                else ""
+                            ),
+                            "county_match_distance_km": (
+                                round(nearest_distance_km, 4)
+                                if nearest_distance_km != ""
+                                else ""
+                            ),
+                        }
+                    )
+                    unmatched_rows.append(output_row)
 
     office_fieldnames = list(office_rows[0].keys()) + [
         "county_fips",
@@ -706,10 +753,7 @@ def main() -> int:
         ],
     )
 
-    if unmatched_rows:
-        write_rows(UNMATCHED_OUTPUT, unmatched_rows, office_fieldnames)
-    elif UNMATCHED_OUTPUT.exists():
-        UNMATCHED_OUTPUT.unlink()
+    write_rows(UNMATCHED_OUTPUT, unmatched_rows, office_fieldnames)
 
     state_counts = Counter(row.get("state", "") for row in assigned_rows)
     top_states = state_counts.most_common(10)
@@ -717,6 +761,7 @@ def main() -> int:
         offices_read=len(office_rows),
         direct_spatial_matches=direct_spatial_matches,
         fallback_matches=fallback_matches,
+        manual_matches=manual_matches,
         unmatched_rows=unmatched_rows,
         county_count=len(county_counts),
         state_count=len(state_counts),
@@ -727,6 +772,7 @@ def main() -> int:
     print(f"Number of offices assigned to counties: {len(assigned_rows)}")
     print(f"Number matched by direct spatial join: {direct_spatial_matches}")
     print(f"Number matched by nearest-county fallback: {fallback_matches}")
+    print(f"Number matched by manual review crosswalk: {manual_matches}")
     print(
         "Nearest-county fallback threshold: "
         f"{NEAREST_COUNTY_FALLBACK_THRESHOLD_MILES} miles"
