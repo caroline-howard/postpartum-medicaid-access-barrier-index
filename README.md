@@ -1,10 +1,16 @@
-# Medicaid Access Barriers Power BI Dashboard
+# Postpartum Medicaid Access Barriers Power BI Dashboard
 
-Power BI portfolio project analyzing geographic access to Medicaid office locations and county-level administrative access barriers using public health, demographic, and spatial data.
+Power BI portfolio project identifying where postpartum Medicaid populations may face greater administrative access barriers after delivery using geocoded Medicaid office locations, county-level demographic and access indicators, and spatial context.
 
 ## Main Research Question
 
-Where may in-person Medicaid enrollment support be limited relative to population need, transportation barriers, and digital access constraints?
+Where may postpartum Medicaid populations face greater administrative access barriers to maintaining coverage and navigating support after delivery?
+
+## Project Purpose
+
+This project uses geocoded Medicaid office locations, county-level ACS indicators, and rural-urban context to identify counties where limited office availability overlaps with postpartum-relevant access barriers.
+
+The goal is to support a policy-facing screening dashboard for identifying places that may warrant closer review, outreach, or support planning. It is not designed as a causal analysis of Medicaid enrollment, retention, or health outcomes.
 
 ## Planned Data Sources
 
@@ -16,21 +22,34 @@ Where may in-person Medicaid enrollment support be limited relative to populatio
 
 ## Planned Power BI Report Pages
 
-1. National Medicaid Office Access Map
+1. National Postpartum Medicaid Access Overview
 2. State Comparison
 3. County Access Gaps
-4. Access Barrier Index
+4. Potential Postpartum Medicaid Administrative Access Barrier Index
 5. Data Notes and Limitations
+
+## Planned Potential Postpartum Medicaid Administrative Access Barrier Index
+
+Planned index components include:
+
+- No Medicaid office in county
+- Poverty rate
+- No vehicle household rate
+- No internet subscription rate
+- Limited English rate
+- Disability rate
+- Female population ages 15-44, to be added in a future ACS update
+- Rural/nonmetro status, to be added through rural-urban classification
 
 ## Current Project Status
 
-Initial repository setup. This project currently contains the planned folder structure and documentation placeholders only. Data acquisition, cleaning, spatial joins, index development, and Power BI report construction have not started yet.
+Initial data-processing scaffolding is underway. Current project framing is being narrowed around postpartum Medicaid administrative access barriers. Index development and Power BI report construction have not started yet.
 
 ## Data Source Setup
 
 The primary data source is the Shafer et al. 2024 geocoded Medicaid office locations dataset from Harvard Dataverse. The raw Excel file should be saved locally as `data/raw/medicaid_offices.xlsx`.
 
-Raw data should remain unchanged. Cleaning, county spatial joins, access-barrier measures, and export-ready tables will be handled in later scripts. This setup step does not perform analysis yet.
+Raw data should remain unchanged. Cleaning, county spatial joins, postpartum-relevant access-barrier measures, and export-ready tables will be handled by scripts. This documentation step does not add new data or perform index calculations.
 
 ## Current Data Pipeline
 
@@ -40,12 +59,16 @@ Raw data should remain unchanged. Cleaning, county spatial joins, access-barrier
 4. Complete county office access base table: `data/processed/county_office_access_base.csv`
 5. ACS county access-barrier indicators: `data/processed/acs_county_access_indicators.csv`
 6. Future step: add rural-urban classification
-7. Future step: build access-barrier index
+7. Future step: build Potential Postpartum Medicaid Administrative Access Barrier Index
 8. Future step: build Power BI report
 
 ## Notes on Limitations
 
-- The project will identify potential geographic and administrative access barriers; it will not claim that office availability causes Medicaid enrollment outcomes.
+- The dashboard does not identify individual postpartum Medicaid enrollees.
+- The Potential Postpartum Medicaid Administrative Access Barrier Index is a screening tool, not a causal measure.
+- The project will identify potential geographic and administrative access barriers; it will not claim that office availability causes Medicaid enrollment, retention, or health outcomes.
 - The Medicaid office dataset is a point-in-time public dataset and should not be presented as a live office locator.
 - County-level indicators may hide important within-county variation, especially in large rural counties and dense urban counties.
-- The first project milestone does not include raw data files, processed datasets, or analytic outputs.
+- Medicaid office availability does not capture all enrollment assistance, online support, navigators, health systems, or community-based support.
+- Female population ages 15-44 is a proxy for reproductive-age population context, not a direct measure of postpartum need.
+- Raw and processed datasets are generated or stored locally and are not committed to the repository.
