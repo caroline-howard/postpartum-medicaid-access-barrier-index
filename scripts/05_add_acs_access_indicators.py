@@ -21,6 +21,7 @@ import csv
 import http.client
 import json
 import os
+import ssl
 from collections import OrderedDict
 from datetime import datetime
 from pathlib import Path
@@ -36,10 +37,9 @@ ACS_OUTPUT = PROJECT_ROOT / "data" / "processed" / "acs_county_access_indicators
 MERGED_OUTPUT = PROJECT_ROOT / "data" / "processed" / "county_office_access_with_acs.csv"
 SUMMARY_OUTPUT = PROJECT_ROOT / "outputs" / "acs_access_indicators_summary.md"
 
+ACS_YEAR = 2024
 DETAIL_ENDPOINT = "acs/acs5"
 SUBJECT_ENDPOINT = "acs/acs5/subject"
-START_YEAR = datetime.now().year - 1
-EARLIEST_YEAR = 2020
 
 RAW_VARIABLES: OrderedDict[str, tuple[str, str, str]] = OrderedDict(
     [
@@ -318,9 +318,24 @@ def write_csv_rows(path: Path, rows: list[dict[str, Any]], fieldnames: list[str]
         writer.writerows(rows)
 
 
+def ssl_context() -> ssl.SSLContext:
+    """Use a valid local CA bundle when Python's OpenSSL default path is missing."""
+    default_paths = ssl.get_default_verify_paths()
+    candidate_paths = [
+        default_paths.cafile,
+        default_paths.openssl_cafile,
+        "/etc/ssl/cert.pem",
+        "/private/etc/ssl/cert.pem",
+    ]
+    for candidate in candidate_paths:
+        if candidate and Path(candidate).exists():
+            return ssl.create_default_context(cafile=candidate)
+    return ssl.create_default_context()
+
+
 def fetch_json(url: str) -> list[list[str]]:
     try:
-        with urlopen(url, timeout=60) as response:
+        with urlopen(url, timeout=60, context=ssl_context()) as response:
             text = response.read().decode("utf-8")
     except (HTTPError, URLError, TimeoutError, http.client.RemoteDisconnected) as exc:
         raise RuntimeError(f"Census API request failed: {exc}") from exc
@@ -331,6 +346,19 @@ def fetch_json(url: str) -> list[list[str]]:
         return json.loads(text)
     except json.JSONDecodeError as exc:
         raise RuntimeError(f"Census API returned invalid JSON: {exc}") from exc
+
+
+def print_api_diagnostics(
+    year: int,
+    endpoint: str,
+    api_key: str | None,
+    error_message: str | None = None,
+) -> None:
+    print(f"ACS year attempted: {year}")
+    print(f"Endpoint attempted: https://api.census.gov/data/{year}/{endpoint}")
+    print(f"CENSUS_API_KEY detected: {'yes' if api_key else 'no'}")
+    if error_message:
+        print(f"API error message: {error_message}")
 
 
 def variable_ids_for_endpoint(endpoint: str) -> list[str]:
@@ -353,7 +381,12 @@ def fetch_endpoint_data(
     if api_key:
         params["key"] = api_key
     url = f"https://api.census.gov/data/{year}/{endpoint}?{urlencode(params)}"
-    data = fetch_json(url)
+    print_api_diagnostics(year, endpoint, api_key)
+    try:
+        data = fetch_json(url)
+    except RuntimeError as exc:
+        print_api_diagnostics(year, endpoint, api_key, str(exc))
+        raise
     headers = data[0]
     rows = data[1:]
 
@@ -365,18 +398,29 @@ def fetch_endpoint_data(
     return output
 
 
-def discover_acs_year(api_key: str | None) -> int:
-    for year in range(START_YEAR, EARLIEST_YEAR - 1, -1):
-        try:
-            fetch_endpoint_data(year, DETAIL_ENDPOINT, api_key)
-            fetch_endpoint_data(year, SUBJECT_ENDPOINT, api_key)
-            return year
-        except RuntimeError:
-            continue
-    raise RuntimeError(
-        f"No ACS 5-year detail and subject datasets were reachable from {EARLIEST_YEAR} "
-        f"through {START_YEAR}."
-    )
+def run_b01001_test_request(year: int, api_key: str | None) -> None:
+    params = {
+        "get": "NAME,B01001_030E",
+        "for": "county:*",
+        "in": "state:01",
+    }
+    if api_key:
+        params["key"] = api_key
+    url = f"https://api.census.gov/data/{year}/{DETAIL_ENDPOINT}?{urlencode(params)}"
+    print("Running ACS detailed-table test request: NAME,B01001_030E for Alabama counties.")
+    print_api_diagnostics(year, DETAIL_ENDPOINT, api_key)
+    try:
+        data = fetch_json(url)
+    except RuntimeError as exc:
+        print_api_diagnostics(year, DETAIL_ENDPOINT, api_key, str(exc))
+        raise RuntimeError(
+            "Small ACS B01001 detailed-table test request failed."
+        ) from exc
+    if len(data) < 2:
+        raise RuntimeError(
+            "Small ACS B01001 detailed-table test request returned no county rows."
+        )
+    print("Small ACS B01001 detailed-table test request succeeded.")
 
 
 def to_number(value: str | None) -> float | None:
@@ -752,8 +796,9 @@ ACS estimates are survey-based and include uncertainty not represented in this f
 def main() -> int:
     base_rows = read_csv_rows(COUNTY_BASE_INPUT)
     api_key = get_api_key()
+    acs_year = ACS_YEAR
     try:
-        acs_year = discover_acs_year(api_key)
+        run_b01001_test_request(acs_year, api_key)
         acs_rows, acs_match_count = build_acs_rows(acs_year, api_key, base_rows)
         acs_data_mode = "Census API" if api_key else "Census API without key"
     except RuntimeError as api_error:
