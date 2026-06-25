@@ -1,6 +1,6 @@
 # ACS Variable Dictionary
 
-This project uses ACS 5-year county-level variables from the most recent Census API vintage available at run time. See `scripts/05_add_acs_access_indicators.py` for the executable mapping.
+This project uses ACS 2024 5-year county-level variables from the Census API. See `scripts/05_add_acs_access_indicators.py` for the executable mapping.
 
 | ACS endpoint | ACS table ID | ACS variable ID | Plain-English label | Derived field name | Calculation formula |
 | --- | --- | --- | --- | --- | --- |

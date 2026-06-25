@@ -1,6 +1,6 @@
 # Postpartum Medicaid Access Barriers Power BI Dashboard
 
-Power BI portfolio project identifying where postpartum Medicaid populations may face greater administrative access barriers after delivery using geocoded Medicaid office locations, county-level demographic and access indicators, and spatial context.
+Power BI portfolio project identifying where postpartum Medicaid populations may face greater administrative access barriers after delivery using geocoded Medicaid office locations, county-level demographic and access indicators, rural-urban context, and hospital-based obstetric care status.
 
 ## Main Research Question
 
@@ -12,22 +12,25 @@ This project uses geocoded Medicaid office locations, county-level ACS indicator
 
 The goal is to support a policy-facing screening dashboard for identifying places that may warrant closer review, outreach, or support planning. It is not designed as a causal analysis of Medicaid enrollment, retention, or health outcomes.
 
+The dashboard distinguishes Medicaid office availability as administrative and enrollment support access from hospital-based obstetric care status as clinical maternity access context.
+
 ## Planned Data Sources
 
 - Shafer et al. 2024 geocoded Medicaid office locations dataset from Harvard Dataverse
 - Census or ACS county-level demographic indicators
 - Hospital-based obstetric care status
-- CMS Medicaid enrollment data
+- CMS Medicaid enrollment data, optional state-level context only
 - Rural-urban classification data
-- Optional CDC/ATSDR Social Vulnerability Index
+- CDC/ATSDR Social Vulnerability Index, deferred comparison/context layer
 
 ## Planned Power BI Report Pages
 
 1. National Postpartum Medicaid Access Overview
-2. State Comparison
+2. Administrative vs. Clinical Access
 3. County Access Gaps
 4. Potential Postpartum Medicaid Administrative Access Barrier Index
-5. Data Notes and Limitations
+5. State Comparison
+6. Data Notes and Limitations
 
 ## Planned Potential Postpartum Medicaid Administrative Access Barrier Index
 
@@ -41,11 +44,13 @@ Planned index components include:
 - Disability rate
 - No hospital-based obstetric care identified
 - Female population ages 15-44
-- Rural/nonmetro status, to be added through rural-urban classification
+- Rural/nonmetro status
 
 ## Current Project Status
 
-Initial data-processing scaffolding is underway. Current project framing is being narrowed around postpartum Medicaid administrative access barriers. Index development and Power BI report construction have not started yet.
+The first-version data layers have been pulled and merged through the county analytic base: Medicaid office locations, county assignment, complete county office base table, ACS access-barrier indicators, female population ages 15-44, NCHS rural-urban classification, and hospital-based obstetric care status.
+
+The next analytic step is `scripts/08_build_postpartum_access_barrier_index.py`. Index development, Power BI export packaging, and report construction have not started yet.
 
 ## Data Source Setup
 
@@ -56,12 +61,14 @@ Raw data should remain unchanged. Cleaning, county spatial joins, postpartum-rel
 ## Current Data Pipeline
 
 1. Raw Medicaid office Excel file: `data/raw/medicaid_offices.xlsx`
-2. County office access base: `data/processed/county_office_access_base.csv`
-3. ACS access-barrier indicators: `data/processed/acs_county_access_indicators.csv`
-4. Rural-urban classification: `data/processed/county_office_access_with_acs_rurality.csv`
-5. Hospital-based obstetric care status: `data/processed/county_postpartum_access_analytic_base.csv`
-6. Future step: build Potential Postpartum Medicaid Administrative Access Barrier Index
-7. Future step: build Power BI report
+2. Clean Medicaid office CSV: `data/processed/medicaid_offices_clean.csv`
+3. County-assigned Medicaid office file: `data/processed/medicaid_offices_with_county.csv`
+4. Complete county office access base table: `data/processed/county_office_access_base.csv`
+5. ACS county access-barrier indicators, including female population ages 15-44: `data/processed/county_office_access_with_acs.csv`
+6. NCHS rural-urban classification: `data/processed/county_office_access_with_acs_rurality.csv`
+7. Hospital-based obstetric care status: `data/processed/county_postpartum_access_analytic_base.csv`
+8. Future step: Potential Postpartum Medicaid Administrative Access Barrier Index
+9. Future step: Power BI export package and report
 
 ## Notes on Limitations
 
@@ -71,5 +78,6 @@ Raw data should remain unchanged. Cleaning, county spatial joins, postpartum-rel
 - The Medicaid office dataset is a point-in-time public dataset and should not be presented as a live office locator.
 - County-level indicators may hide important within-county variation, especially in large rural counties and dense urban counties.
 - Medicaid office availability does not capture all enrollment assistance, online support, navigators, health systems, or community-based support.
+- Hospital-based obstetric care status captures clinical maternity access context and does not measure Medicaid administrative or enrollment support.
 - Female population ages 15-44 is a proxy for reproductive-age population context, not a direct measure of postpartum need.
 - Raw and processed datasets are generated or stored locally and are not committed to the repository.

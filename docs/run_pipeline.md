@@ -1,5 +1,20 @@
 # Run Pipeline
 
+## Prerequisites
+
+- Run commands from the repository root.
+- Save the raw Medicaid office Excel file as `data/raw/medicaid_offices.xlsx`.
+- Set `CENSUS_API_KEY` before running the ACS script:
+
+```bash
+export CENSUS_API_KEY="your_key_here"
+```
+
+- Processed CSV outputs are generated locally under `data/processed/` and are ignored by Git.
+- Validation summaries under `outputs/` are tracked when they are small and useful for documenting pipeline checks.
+
+## Script Order
+
 Run the data-processing scripts in this order:
 
 1. `scripts/02_clean_medicaid_offices.py`
@@ -9,4 +24,4 @@ Run the data-processing scripts in this order:
 5. `scripts/06_add_rural_urban_classification.py`
 6. `scripts/07_add_obstetric_care_status.py`
 
-Processed CSV outputs are generated locally under `data/processed/` and are not committed to the repository. Validation summaries under `outputs/` are tracked when they are small and useful for documenting pipeline checks.
+The next planned analytic script is `scripts/08_build_postpartum_access_barrier_index.py`.
