@@ -12,4 +12,5 @@ outputs/*
 !outputs/cleaning_summary.md
 !outputs/county_assignment_summary.md
 !outputs/offices_without_county_match.csv
+!outputs/acs_access_indicators_summary.md
 !outputs/county_office_access_base_summary.md
