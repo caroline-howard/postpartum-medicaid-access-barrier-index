@@ -2,11 +2,13 @@
 
 ## Project Purpose
 
-This project will build a Power BI portfolio dashboard that examines geographic access to Medicaid office locations and county-level administrative access barriers. The dashboard will combine public office-location, demographic, enrollment, rurality, and optional vulnerability data to identify places where in-person Medicaid enrollment support may be limited relative to need.
+This project will build a Power BI portfolio dashboard focused on postpartum Medicaid administrative access barriers. The dashboard will combine public Medicaid office-location data, county-level ACS indicators, and rural-urban context to identify counties where limited office availability overlaps with postpartum-relevant access barriers after delivery.
+
+The dashboard is intended as a policy-facing screening tool for identifying places that may warrant closer review, outreach, or support planning. It is not a causal analysis of Medicaid enrollment, retention, or health outcomes.
 
 ## Initial Milestone
 
-The first milestone is only to prepare a clean repository structure and documentation foundation. It does not perform data analysis, add raw data files, create processed datasets, or build the Power BI report.
+The first milestone was to prepare a clean repository structure and documentation foundation. The current framing milestone narrows the project around postpartum Medicaid access barriers without adding new data sources, scripts, index calculations, or Power BI files.
 
 ## Planned Data Pipeline
 
@@ -14,19 +16,19 @@ The first milestone is only to prepare a clean repository structure and document
 2. Clean office address and coordinate fields.
 3. Prepare county boundary files for spatial joins and mapping.
 4. Join office points to counties and calculate county office counts.
-5. Add ACS, CMS Medicaid enrollment, rural-urban classification, and optional SVI indicators.
-6. Calculate access measures such as office density, zero-office counties, and nearest-office distance.
-7. Build a transparent county-level access barrier index.
+5. Add ACS indicators relevant to postpartum administrative access barriers, including a future reproductive-age population context measure such as female population ages 15-44.
+6. Add rural-urban classification to support metro/nonmetro comparisons.
+7. Build a transparent Potential Postpartum Medicaid Administrative Access Barrier Index.
 8. Export final model-ready tables for Power BI.
 
 ## Planned Power BI Outputs
 
-- National Medicaid office access map
+- National Postpartum Medicaid Access Overview
 - State comparison dashboard page
 - County access gaps page
-- Access Barrier Index page
+- Potential Postpartum Medicaid Administrative Access Barrier Index page
 - Data notes and limitations page
 
-## First Milestone Note
+## Current Milestone Note
 
-This first milestone is limited to repository organization and documentation placeholders. Data analysis and dashboard development will begin in later milestones.
+This milestone is limited to project framing and documentation. It does not add new data, scripts, Power BI files, or index calculations.
