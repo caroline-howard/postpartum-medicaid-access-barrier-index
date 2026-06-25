@@ -9,3 +9,4 @@ outputs/*
 !data/raw/.gitkeep
 !data/processed/.gitkeep
 !outputs/.gitkeep
+!outputs/cleaning_summary.md

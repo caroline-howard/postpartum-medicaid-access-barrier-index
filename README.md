@@ -32,6 +32,14 @@ The primary data source is the Shafer et al. 2024 geocoded Medicaid office locat
 
 Raw data should remain unchanged. Cleaning, county spatial joins, access-barrier measures, and export-ready tables will be handled in later scripts. This setup step does not perform analysis yet.
 
+## Current Data Pipeline
+
+1. Raw Medicaid office Excel file: `data/raw/medicaid_offices.xlsx`
+2. Clean Medicaid office CSV: `data/processed/medicaid_offices_clean.csv`
+3. Future step: assign offices to counties
+4. Future step: add ACS and access-barrier indicators
+5. Future step: build Power BI report
+
 ## Notes on Limitations
 
 - The project will identify potential geographic and administrative access barriers; it will not claim that office availability causes Medicaid enrollment outcomes.
