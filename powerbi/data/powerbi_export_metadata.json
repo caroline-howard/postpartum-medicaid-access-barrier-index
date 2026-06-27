@@ -1,0 +1,27 @@
+{
+  "export_timestamp": "2026-06-27T18:57:05-04:00",
+  "input_files": [
+    "data/processed/county_postpartum_access_index.csv",
+    "data/processed/medicaid_offices_with_county.csv",
+    "data/processed/state_postpartum_access_index_summary.csv"
+  ],
+  "output_files": [
+    "powerbi/data/county_postpartum_access_index.csv",
+    "powerbi/data/medicaid_offices_with_county.csv",
+    "powerbi/data/state_postpartum_access_index_summary.csv",
+    "powerbi/data/powerbi_data_dictionary.csv",
+    "powerbi/data/powerbi_export_metadata.json"
+  ],
+  "county_row_count": 3144,
+  "office_row_count": 3027,
+  "state_row_count": 51,
+  "analytic_universe": "50 states and District of Columbia",
+  "notes": [
+    "Exports are intended for Power BI import.",
+    "County index export contains one row per county.",
+    "Office export contains one row per Medicaid office.",
+    "State export contains one row per state or District of Columbia.",
+    "No age 65+ fields are included in the Power BI export package.",
+    "This export step does not create a Power BI .pbix file."
+  ]
+}
