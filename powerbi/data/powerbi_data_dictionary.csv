@@ -1,0 +1,59 @@
+file_name,field_name,description,source_layer,use_in_powerbi
+county_postpartum_access_index.csv,county_fips,Five-digit Census county FIPS code used as the county join key.,County access index analytic base,Join/filter key
+county_postpartum_access_index.csv,county_name,County or county-equivalent name.,County access index analytic base,Dashboard field
+county_postpartum_access_index.csv,state_fips,Two-digit Census state FIPS code.,County access index analytic base,Join/filter key
+county_postpartum_access_index.csv,state_abbr,Two-letter state or District of Columbia abbreviation.,County access index analytic base,Join/filter key
+county_postpartum_access_index.csv,state_name,State or District of Columbia name.,County access index analytic base,Dashboard field
+county_postpartum_access_index.csv,office_count,Number of Medicaid office locations assigned to the county.,County access index analytic base,Dashboard field
+county_postpartum_access_index.csv,has_medicaid_office,Binary indicator for at least one Medicaid office in the county.,County access index analytic base,Dashboard field
+county_postpartum_access_index.csv,has_hospital_obstetric_care,Binary indicator for hospital-based obstetric care availability.,County access index analytic base,Dashboard field
+county_postpartum_access_index.csv,no_hospital_obstetric_care,Binary indicator for no hospital-based obstetric care identified.,County access index analytic base,Dashboard field
+county_postpartum_access_index.csv,poverty_rate,ACS county poverty rate.,County access index analytic base,Dashboard field
+county_postpartum_access_index.csv,no_vehicle_rate,ACS share of households with no vehicle available.,County access index analytic base,Dashboard field
+county_postpartum_access_index.csv,no_internet_rate,ACS share of households without an internet subscription.,County access index analytic base,Dashboard field
+county_postpartum_access_index.csv,limited_english_rate,ACS limited-English-speaking household rate.,County access index analytic base,Dashboard field
+county_postpartum_access_index.csv,disability_rate,ACS county disability rate used as an access-support context measure.,County access index analytic base,Dashboard field
+county_postpartum_access_index.csv,female_15_44_rate,ACS female population ages 15-44 share of total population.,County access index analytic base,Dashboard field
+county_postpartum_access_index.csv,metro_nonmetro_flag,Metro or Nonmetro county grouping from NCHS classification.,County access index analytic base,Index component flag
+county_postpartum_access_index.csv,nchs_urban_rural_category,Readable NCHS urban-rural category label.,County access index analytic base,Dashboard field
+county_postpartum_access_index.csv,no_medicaid_office_flag,Index flag for no Medicaid office in county.,County access index analytic base,Index component flag
+county_postpartum_access_index.csv,no_hospital_obstetric_care_flag,Index flag for no hospital-based obstetric care identified.,County access index analytic base,Index component flag
+county_postpartum_access_index.csv,high_poverty_flag,Index flag for top-quartile poverty rate.,County access index analytic base,Index component flag
+county_postpartum_access_index.csv,high_no_vehicle_flag,Index flag for top-quartile no-vehicle household rate.,County access index analytic base,Index component flag
+county_postpartum_access_index.csv,high_no_internet_flag,Index flag for top-quartile no-internet subscription rate.,County access index analytic base,Index component flag
+county_postpartum_access_index.csv,high_limited_english_flag,Index flag for top-quartile limited English rate.,County access index analytic base,Index component flag
+county_postpartum_access_index.csv,high_disability_flag,Index flag for top-quartile disability rate.,County access index analytic base,Index component flag
+county_postpartum_access_index.csv,high_female_15_44_flag,Index flag for top-quartile female population ages 15-44 rate.,County access index analytic base,Index component flag
+county_postpartum_access_index.csv,nonmetro_flag,Index flag for Nonmetro county.,County access index analytic base,Index component flag
+county_postpartum_access_index.csv,postpartum_access_barrier_score,Weighted Potential Postpartum Medicaid Administrative Access Barrier Index score.,County access index analytic base,Index measure and category
+county_postpartum_access_index.csv,postpartum_access_barrier_level,Concern level derived from the index score.,County access index analytic base,Index measure and category
+county_postpartum_access_index.csv,index_component_count,Count of triggered index component flags.,County access index analytic base,Tooltip/explainability
+county_postpartum_access_index.csv,index_component_summary,Semicolon-separated list of triggered index components.,County access index analytic base,Tooltip/explainability
+medicaid_offices_with_county.csv,office_id,Stable Medicaid office identifier.,Medicaid office county assignment,Dashboard field
+medicaid_offices_with_county.csv,agency_name,Medicaid office or agency name.,Medicaid office county assignment,Dashboard field
+medicaid_offices_with_county.csv,full_address,Concatenated office address.,Medicaid office county assignment,Dashboard field
+medicaid_offices_with_county.csv,street1,Office street address line 1.,Medicaid office county assignment,Dashboard field
+medicaid_offices_with_county.csv,street2,Office street address line 2.,Medicaid office county assignment,Dashboard field
+medicaid_offices_with_county.csv,city,Office city.,Medicaid office county assignment,Dashboard field
+medicaid_offices_with_county.csv,state,Office state abbreviation from the source address.,Medicaid office county assignment,Dashboard field
+medicaid_offices_with_county.csv,zip_code,Office ZIP code.,Medicaid office county assignment,Dashboard field
+medicaid_offices_with_county.csv,latitude,Office latitude.,Medicaid office county assignment,Map point location
+medicaid_offices_with_county.csv,longitude,Office longitude.,Medicaid office county assignment,Map point location
+medicaid_offices_with_county.csv,county_fips,Five-digit Census county FIPS code used as the county join key.,Medicaid office county assignment,Join/filter key
+medicaid_offices_with_county.csv,county_name,County or county-equivalent name.,Medicaid office county assignment,Dashboard field
+medicaid_offices_with_county.csv,state_abbr,Two-letter state or District of Columbia abbreviation.,Medicaid office county assignment,Join/filter key
+medicaid_offices_with_county.csv,county_match_method,Method used to assign the office to a county.,Medicaid office county assignment,Dashboard field
+state_postpartum_access_index_summary.csv,state_fips,Two-digit Census state FIPS code.,State-level index summary,Join/filter key
+state_postpartum_access_index_summary.csv,state_abbr,Two-letter state or District of Columbia abbreviation.,State-level index summary,Join/filter key
+state_postpartum_access_index_summary.csv,state_name,State or District of Columbia name.,State-level index summary,Dashboard field
+state_postpartum_access_index_summary.csv,total_counties,Number of counties or county equivalents in the state.,State-level index summary,Dashboard field
+state_postpartum_access_index_summary.csv,average_postpartum_access_barrier_score,Average county index score in the state.,State-level index summary,Dashboard field
+state_postpartum_access_index_summary.csv,median_postpartum_access_barrier_score,Median county index score in the state.,State-level index summary,Dashboard field
+state_postpartum_access_index_summary.csv,counties_lower_concern,Count of counties in lower concern level.,State-level index summary,Dashboard field
+state_postpartum_access_index_summary.csv,counties_moderate_concern,Count of counties in moderate concern level.,State-level index summary,Dashboard field
+state_postpartum_access_index_summary.csv,counties_high_concern,Count of counties in high concern level.,State-level index summary,Dashboard field
+state_postpartum_access_index_summary.csv,counties_highest_concern,Count of counties in highest concern level.,State-level index summary,Dashboard field
+state_postpartum_access_index_summary.csv,share_counties_high_or_highest_concern,Share of counties at high or highest concern.,State-level index summary,Dashboard field
+state_postpartum_access_index_summary.csv,counties_no_medicaid_office,Count of counties with no Medicaid office.,State-level index summary,Dashboard field
+state_postpartum_access_index_summary.csv,counties_no_hospital_obstetric_care,Count of counties with no hospital-based obstetric care identified.,State-level index summary,Dashboard field
+state_postpartum_access_index_summary.csv,counties_with_both_admin_and_clinical_gaps,Count of counties with no Medicaid office and no hospital-based obstetric care identified.,State-level index summary,Dashboard field

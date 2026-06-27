@@ -11,7 +11,7 @@ This table summarizes the first-version data layers currently represented in the
 | Rurality | Complete | `scripts/06_add_rural_urban_classification.py` | `data/processed/county_office_access_with_acs_rurality.csv` |
 | Obstetric care status | Complete | `scripts/07_add_obstetric_care_status.py` | `data/processed/county_postpartum_access_analytic_base.csv` |
 | Access barrier index | Complete | `scripts/08_build_postpartum_access_barrier_index.py` | `data/processed/county_postpartum_access_index.csv` |
-| Power BI export | Not built yet | future `scripts/09_prepare_powerbi_export.py` | future output |
+| Power BI export | Complete | `scripts/09_prepare_powerbi_export.py` | `powerbi/data/` |
 
 ## Planned Index Context Notes
 

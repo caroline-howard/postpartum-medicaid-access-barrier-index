@@ -24,5 +24,6 @@ Run the data-processing scripts in this order:
 5. `scripts/06_add_rural_urban_classification.py`
 6. `scripts/07_add_obstetric_care_status.py`
 7. `scripts/08_build_postpartum_access_barrier_index.py`
+8. `scripts/09_prepare_powerbi_export.py`
 
-The next planned step is preparing the Power BI export package.
+The Power BI report is built manually in Power BI Desktop after the export package is prepared.

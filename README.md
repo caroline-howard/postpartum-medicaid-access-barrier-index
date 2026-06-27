@@ -79,7 +79,13 @@ Raw data should remain unchanged. Cleaning, county spatial joins, postpartum-rel
 6. NCHS rural-urban classification: `data/processed/county_office_access_with_acs_rurality.csv`
 7. Hospital-based obstetric care status: `data/processed/county_postpartum_access_analytic_base.csv`
 8. Potential Postpartum Medicaid Administrative Access Barrier Index: `data/processed/county_postpartum_access_index.csv`
-9. Future step: Power BI export package and report
+9. Power BI export package: `powerbi/data/`
+
+## Power BI Export Package
+
+The Power BI export package creates clean dashboard-ready CSVs under `powerbi/data/`. Power BI should import the county index file, Medicaid office point file, and state summary file.
+
+The export package does not create the Power BI report itself. The Power BI report will be built manually in Power BI Desktop.
 
 ## Notes on Limitations
 
