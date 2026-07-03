@@ -1,6 +1,6 @@
 # Data Sources
 
-This file documents the source inventory for the Postpartum Medicaid Access Barriers Power BI project. Raw data files should remain unchanged in `data/raw/`; cleaning and derived outputs are created by scripts.
+This file documents the source inventory for the Postpartum Medicaid Access Barrier Index project. Raw data files should remain unchanged in `data/raw/`; cleaning, derived index inputs, and dashboard-ready outputs are created by scripts.
 
 ## A. Medicaid Office Locations
 
@@ -75,8 +75,8 @@ This file documents the source inventory for the Postpartum Medicaid Access Barr
 ## H. Potential Postpartum Medicaid Administrative Access Barrier Index
 
 - Source: Derived from existing sourced layers already documented above.
-- Purpose: Combine administrative access, clinical maternity access context, ACS access-support indicators, reproductive-age population context, and rurality into a transparent county-level screening score.
+- Purpose: Main analytic contribution of the project. The index combines administrative access, clinical maternity access context, ACS access-support indicators, reproductive-age population context, and rurality into a transparent county-level screening score.
 - Output: `data/processed/county_postpartum_access_index.csv`
 - Note: This index does not introduce a new external dataset. It is calculated from the existing county analytic base by `scripts/08_build_postpartum_access_barrier_index.py`.
-- Limitation: The index is a screening tool, not a causal measure, and does not identify individual postpartum Medicaid enrollees.
+- Interpretation note: The index is intended for policy-facing screening, county comparison, and access-support prioritization. It does not identify individual postpartum Medicaid enrollees.
 - Status: Built by `scripts/08_build_postpartum_access_barrier_index.py`

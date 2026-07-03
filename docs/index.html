@@ -1,0 +1,258 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Postpartum Medicaid Access Barrier Index</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --navy: #0b3b6e;
+      --blue: #2f6f9f;
+      --ink: #1d2733;
+      --muted: #5c6b7a;
+      --line: #d9e3ec;
+      --panel: #f6f9fc;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--ink);
+      background: #ffffff;
+    }
+
+    main {
+      width: min(1120px, calc(100vw - 40px));
+      margin: 0 auto;
+      padding: 48px 0 64px;
+    }
+
+    header {
+      display: grid;
+      gap: 12px;
+      margin-bottom: 30px;
+      padding-bottom: 24px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    h1 {
+      margin: 0;
+      color: var(--navy);
+      font-size: clamp(2.35rem, 5vw, 4.35rem);
+      line-height: 0.98;
+      letter-spacing: 0;
+      max-width: 900px;
+    }
+
+    .title-line {
+      display: block;
+    }
+
+    .eyebrow {
+      margin: 0;
+      color: var(--blue);
+      font-size: 0.82rem;
+      font-weight: 750;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .summary {
+      max-width: 860px;
+      color: var(--muted);
+      font-size: 1.05rem;
+      line-height: 1.55;
+    }
+
+    .byline {
+      margin: 0;
+      color: var(--ink);
+      font-size: 1rem;
+      font-weight: 700;
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 4px;
+    }
+
+    a.button {
+      display: inline-flex;
+      align-items: center;
+      min-height: 42px;
+      padding: 0 16px;
+      border-radius: 6px;
+      border: 1px solid var(--navy);
+      color: #ffffff;
+      background: var(--navy);
+      text-decoration: none;
+      font-weight: 650;
+    }
+
+    a.button.secondary {
+      color: var(--navy);
+      background: #ffffff;
+    }
+
+    .demo-grid {
+      display: grid;
+      gap: 22px;
+    }
+
+    .demo h2 {
+      margin: 0 0 4px;
+      color: var(--navy);
+      font-size: 1.15rem;
+      letter-spacing: 0;
+    }
+
+    .demo-subtitle {
+      margin: 0 0 10px;
+      color: var(--muted);
+      font-size: 0.95rem;
+      line-height: 1.4;
+    }
+
+    .video-frame {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      overflow: hidden;
+      background: var(--panel);
+      box-shadow: 0 18px 40px rgba(11, 59, 110, 0.10);
+    }
+
+    video {
+      display: block;
+      width: 100%;
+      height: auto;
+      background: var(--panel);
+    }
+
+    .note {
+      margin-top: 18px;
+      color: var(--muted);
+      font-size: 0.95rem;
+      line-height: 1.5;
+    }
+
+    section {
+      margin-top: 36px;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .metric {
+      border-top: 3px solid var(--blue);
+      padding-top: 12px;
+    }
+
+    .metric h2 {
+      margin: 0 0 6px;
+      color: var(--navy);
+      font-size: 1rem;
+    }
+
+    .metric p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.45;
+      font-size: 0.95rem;
+    }
+
+    @media (max-width: 760px) {
+      main {
+        width: min(100vw - 28px, 1120px);
+        padding-top: 30px;
+      }
+
+      section {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <p class="eyebrow">Portfolio Research Project</p>
+      <h1>
+        <span class="title-line">Postpartum Medicaid</span>
+        <span class="title-line">Access Barrier Index</span>
+      </h1>
+      <p class="byline">Caroline Howard | Prashant Shekhar</p>
+      <p class="summary">
+        County-level screening index identifying where postpartum Medicaid populations may face greater administrative access barriers after delivery using geocoded Medicaid office locations, county-level demographic and access indicators, rural-urban context, and hospital-based obstetric care status.
+      </p>
+      <p class="summary">
+        Research question: Where may postpartum Medicaid populations face greater administrative access barriers to maintaining coverage and navigating support after delivery? The Power BI dashboard presents the index as an interactive portfolio and policy-facing exploration tool.
+      </p>
+      <div class="actions">
+        <a class="button" href="assets/findings-brief.pdf">View Findings Brief</a>
+        <a class="button secondary" href="https://github.com/caroline-howard/medicaid-access-barriers-powerbi">View GitHub Repo</a>
+      </div>
+    </header>
+
+    <div class="demo-grid">
+      <div class="demo">
+        <h2>National Postpartum Medicaid Access Overview</h2>
+        <p class="demo-subtitle">County-level screening index of administrative, maternity care, and access barriers.</p>
+        <div class="video-frame">
+          <video autoplay muted loop playsinline controls>
+            <source src="assets/dashboard-page-1-demo.mp4" type="video/mp4">
+            Your browser does not support embedded video. Download the dashboard demo from the project assets.
+          </video>
+        </div>
+      </div>
+
+      <div class="demo">
+        <h2>Postpartum Access Barriers by State</h2>
+        <p class="demo-subtitle">Compare states by postpartum Medicaid access burden and identify which index components drive higher scores.</p>
+        <div class="video-frame">
+          <video autoplay muted loop playsinline controls>
+            <source src="assets/dashboard-page-2-demo.mp4" type="video/mp4">
+            Your browser does not support embedded video. Download the dashboard demo from the project assets.
+          </video>
+        </div>
+      </div>
+
+      <div class="demo">
+        <h2>Administrative vs. Clinical Access Gaps</h2>
+        <p class="demo-subtitle">County-level view of the two strongest drivers in the postpartum access barrier index score.</p>
+        <div class="video-frame">
+          <video autoplay muted loop playsinline controls>
+            <source src="assets/dashboard-page-3-demo.mp4" type="video/mp4">
+            Your browser does not support embedded video. Download the dashboard demo from the project assets.
+          </video>
+        </div>
+      </div>
+    </div>
+
+    <p class="note">
+      Silent preview clips of the Power BI dashboard. This page provides a public portfolio preview because the original Power BI tenant does not allow public Publish to web links.
+    </p>
+
+    <section aria-label="Project highlights">
+      <div class="metric">
+        <h2>County-Level Index</h2>
+        <p>Main analytic contribution: a transparent county score for overlapping postpartum Medicaid administrative and access-support barriers.</p>
+      </div>
+      <div class="metric">
+        <h2>Power BI Dashboard</h2>
+        <p>Interactive reporting layer for exploring index scores, component flags, county rankings, and state comparisons.</p>
+      </div>
+      <div class="metric">
+        <h2>Public Data Sources</h2>
+        <p>Uses Shafer et al. Medicaid office locations, Census county boundaries, ACS 2024 5-year indicators, NCHS 2023 rurality, and University of Minnesota hospital-based obstetric care status.</p>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
