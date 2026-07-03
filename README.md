@@ -4,7 +4,7 @@
 
 ## Dashboard Preview
 
-![National Postpartum Medicaid Access Overview](docs/assets/national-overview-animated-20260703.gif)
+![National Postpartum Medicaid Access Overview](docs/assets/national-overview-animated-20260703-182059.gif)
 
 ![Postpartum Access Barriers by State](docs/assets/dashboard-page-2-preview.gif)
 
