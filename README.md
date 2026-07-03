@@ -40,19 +40,18 @@ Score components:
 - Top quartile no-internet subscription rate = 1 point
 - Top quartile limited English rate = 1 point
 - Top quartile disability rate = 1 point
-- Top quartile female population ages 15-44 rate = 1 point
 - Nonmetro county = 1 point
 
-Score range: 0-11 points
+Score range: 0-10 points
 
 Concern levels:
 
 - 0-2 = Lower concern
 - 3-5 = Moderate concern
 - 6-8 = High concern
-- 9-11 = Highest concern
+- 9-10 = Highest concern
 
-Population age 65+ is not included in the score or dashboard context because this project is focused on postpartum Medicaid access barriers. Disability rate remains included as a county-level access-support context measure, not as a direct measure of postpartum disability or pregnancy-related disability.
+Population age 65+ is not included in the score or dashboard context because this project is focused on postpartum Medicaid access barriers. Disability rate remains included as a county-level access-support context measure, not as a direct measure of postpartum disability or pregnancy-related disability. Female population ages 15-44 is retained as postpartum-relevant ACS context, but it is not included as a scoring component in the dashboard index.
 
 ## Data Source Setup
 
@@ -80,5 +79,5 @@ Raw data should remain unchanged. Cleaning, county spatial joins, postpartum-rel
 - County-level indicators may hide important within-county variation, especially in large rural counties and dense urban counties.
 - Medicaid office availability does not capture all enrollment assistance, online support, navigators, health systems, or community-based support.
 - Hospital-based obstetric care status captures clinical maternity access context and does not measure Medicaid administrative or enrollment support.
-- Female population ages 15-44 is a proxy for reproductive-age population context, not a direct measure of postpartum need.
+- Female population ages 15-44 is a proxy for reproductive-age population context, not a direct measure of postpartum need, and is not included in the 0-10 dashboard index score.
 - Raw and processed datasets are generated or stored locally and are not committed to the repository.
