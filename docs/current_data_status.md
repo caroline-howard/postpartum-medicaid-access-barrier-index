@@ -1,6 +1,6 @@
 # Current Data Status
 
-This table summarizes the first-version data layers currently represented in the pipeline. Generated CSV outputs are produced locally and ignored by Git.
+This table summarizes the first-version data layers currently represented in the pipeline. The county-level access barrier index is the main analytic output; Power BI files are generated from that index for dashboard presentation. Generated CSV outputs are produced locally and ignored by Git unless intentionally exported for Power BI.
 
 | Data Layer | Status | Script | Output |
 | --- | --- | --- | --- |
@@ -11,9 +11,9 @@ This table summarizes the first-version data layers currently represented in the
 | Rurality | Complete | `scripts/06_add_rural_urban_classification.py` | `data/processed/county_office_access_with_acs_rurality.csv` |
 | Obstetric care status | Complete | `scripts/07_add_obstetric_care_status.py` | `data/processed/county_postpartum_access_analytic_base.csv` |
 | Access barrier index | Complete | `scripts/08_build_postpartum_access_barrier_index.py` | `data/processed/county_postpartum_access_index.csv` |
-| Power BI export | Complete | `scripts/09_prepare_powerbi_export.py` | `powerbi/data/` |
+| Power BI export | Not built yet | future `scripts/09_prepare_powerbi_export.py` | future output |
 
-## Planned Index Context Notes
+## Index Context Notes
 
 - Population age 65+ is not part of the planned postpartum index or dashboard context.
 - Disability rate remains a planned scoring component as a county-level access-support context measure, not as a direct measure of postpartum disability or pregnancy-related disability.
