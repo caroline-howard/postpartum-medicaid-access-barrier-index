@@ -1,5 +1,7 @@
 # Postpartum Medicaid Access Barrier Index
 
+[Live dashboard preview and findings brief](https://caroline-howard.github.io/medicaid-access-barriers-powerbi/)
+
 County-level postpartum Medicaid access barrier index identifying where postpartum Medicaid populations may face greater administrative access barriers after delivery. The project combines geocoded Medicaid office locations, county-level demographic and access indicators, rural-urban context, and hospital-based obstetric care status, then presents the index through an interactive Power BI dashboard.
 
 ## Main Research Question
@@ -13,11 +15,6 @@ This project develops a transparent county-level screening index for postpartum 
 The main contribution is the Potential Postpartum Medicaid Administrative Access Barrier Index. The Power BI dashboard serves as the reporting and exploration layer for communicating the index, comparing counties and states, and identifying places that may warrant closer review, outreach, resource planning, or access-support prioritization.
 
 The dashboard distinguishes Medicaid office availability as administrative and enrollment support access from hospital-based obstetric care status as clinical maternity access context.
-
-## Portfolio Links
-
-- Dashboard preview and findings brief: `docs/index.html`
-- GitHub Pages URL, after Pages is enabled: `https://caroline-howard.github.io/medicaid-access-barriers-powerbi/`
 
 ## Data Sources
 
