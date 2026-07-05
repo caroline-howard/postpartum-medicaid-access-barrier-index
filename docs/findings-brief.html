@@ -11,12 +11,7 @@
       --ink: #1f2a37;
       --muted: #5f6f7d;
       --line: #d9e3ec;
-      --panel: #ffffff;
-      --page: #f7fafc;
-      --rose: #a73361;
-      --teal: #3f837b;
-      --blue-soft: #eef6fb;
-      --rose-soft: #fbf4f7;
+      --page: #ffffff;
     }
 
     * { box-sizing: border-box; }
@@ -29,216 +24,121 @@
     }
 
     main {
-      width: min(1120px, calc(100vw - 40px));
+      width: min(920px, calc(100vw - 40px));
       margin: 0 auto;
-      padding: 32px 0 56px;
+      padding: 34px 0 56px;
     }
 
     header {
-      padding-bottom: 24px;
+      padding-bottom: 22px;
       border-bottom: 1px solid var(--line);
-    }
-
-    .eyebrow {
-      margin: 0 0 8px;
-      color: var(--rose);
-      font-size: 0.78rem;
-      font-weight: 850;
-      letter-spacing: 0.09em;
-      text-transform: uppercase;
     }
 
     h1 {
       margin: 0;
-      max-width: 900px;
       color: var(--navy);
-      font-size: clamp(2rem, 4.4vw, 3.8rem);
-      line-height: 1;
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      line-height: 1.05;
       letter-spacing: 0;
     }
 
+    h2 {
+      margin: 34px 0 10px;
+      color: var(--navy);
+      font-size: 1.45rem;
+      line-height: 1.2;
+    }
+
+    h3 {
+      margin: 18px 0 6px;
+      color: var(--ink);
+      font-size: 1.05rem;
+    }
+
+    p {
+      margin: 0 0 14px;
+      color: var(--ink);
+      font-size: 1rem;
+      line-height: 1.58;
+    }
+
     .summary {
-      max-width: 850px;
-      margin: 14px 0 0;
+      margin-top: 14px;
       color: var(--muted);
-      font-size: 1.04rem;
-      line-height: 1.55;
     }
 
     .links {
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 12px;
+      gap: 10px;
       margin-top: 18px;
     }
 
     .links a,
     .download {
-      min-height: 52px;
+      min-height: 44px;
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      padding: 0 14px;
+      padding: 0 12px;
       border: 1px solid var(--navy);
-      border-radius: 4px;
+      border-radius: 3px;
       color: var(--navy);
-      background: var(--panel);
+      background: #ffffff;
       text-decoration: none;
-      font-weight: 760;
-      font-size: 0.94rem;
+      font-weight: 700;
+      font-size: 0.93rem;
       text-align: center;
     }
 
     .download {
       width: fit-content;
       margin-top: 18px;
-      background: var(--navy);
-      color: #ffffff;
     }
 
-    .brief-hero {
-      display: grid;
-      grid-template-columns: minmax(0, 1.05fr) minmax(320px, 0.95fr);
-      gap: 18px;
-      margin-top: 28px;
-      align-items: stretch;
+    article {
+      margin-top: 30px;
     }
 
-    .lead-card,
-    .definition-card,
-    .card,
-    .metric,
-    .step {
-      background: var(--panel);
-      border: 1px solid var(--line);
-    }
-
-    .lead-card {
-      padding: 24px;
-      border-top: 5px solid var(--rose);
-      box-shadow: 0 12px 28px rgba(7, 55, 99, 0.07);
-    }
-
-    .lead-card h2,
-    .section h2 {
-      margin: 0;
+    .key-line {
+      margin: 18px 0;
+      padding: 12px 0;
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
       color: var(--navy);
-      font-size: 1.55rem;
-      line-height: 1.18;
+      font-weight: 750;
     }
 
-    .lead-card p,
-    .card p,
-    .definition-card p,
-    .step p,
-    .section p {
-      margin: 10px 0 0;
-      color: var(--muted);
-      font-size: 0.98rem;
+    table {
+      width: 100%;
+      margin: 14px 0 18px;
+      border-collapse: collapse;
+      font-size: 0.95rem;
+    }
+
+    th,
+    td {
+      padding: 9px 8px;
+      border-bottom: 1px solid var(--line);
+      text-align: left;
+      vertical-align: top;
+    }
+
+    th {
+      color: var(--navy);
+      font-weight: 750;
+      border-top: 1px solid var(--line);
+    }
+
+    ul,
+    ol {
+      margin: 0 0 16px;
+      padding-left: 1.3rem;
       line-height: 1.55;
     }
 
-    .definition-card {
-      padding: 20px;
-      background: var(--blue-soft);
-      border-left: 5px solid var(--teal);
-    }
-
-    .definition-card h2 {
-      margin: 0;
-      color: var(--navy);
-      font-size: 1.18rem;
-    }
-
-    .metrics {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 1px;
-      margin-top: 18px;
-      background: var(--line);
-      border: 1px solid var(--line);
-    }
-
-    .metric {
-      padding: 17px;
-    }
-
-    .metric strong {
-      display: block;
-      color: var(--navy);
-      font-size: 2rem;
-      line-height: 1;
-    }
-
-    .metric span {
-      display: block;
-      margin-top: 7px;
-      color: var(--muted);
-      font-size: 0.9rem;
-      line-height: 1.35;
-    }
-
-    .section {
-      margin-top: 34px;
-    }
-
-    .two-col {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 14px;
-      margin-top: 14px;
-    }
-
-    .card {
-      padding: 18px;
-      border-top: 4px solid var(--teal);
-    }
-
-    .card h3,
-    .step h3 {
-      margin: 0;
-      color: var(--navy);
-      font-size: 1.05rem;
-      line-height: 1.25;
-    }
-
-    .steps {
-      display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 10px;
-      margin-top: 14px;
-    }
-
-    .step {
-      padding: 15px;
-    }
-
-    .step-number {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: 28px;
-      height: 28px;
-      margin-bottom: 10px;
-      border-radius: 50%;
-      color: #ffffff;
-      background: var(--navy);
-      font-weight: 800;
-      font-size: 0.86rem;
-    }
-
-    .rule {
-      margin-top: 14px;
-      padding: 18px;
-      background: var(--rose-soft);
-      border-left: 5px solid var(--rose);
-    }
-
-    .rule p {
-      margin: 0;
-      color: var(--ink);
-      font-weight: 650;
-      line-height: 1.55;
+    li + li {
+      margin-top: 6px;
     }
 
     footer {
@@ -252,34 +152,21 @@
 
     footer a {
       color: var(--navy);
-      font-weight: 760;
-    }
-
-    @media (max-width: 900px) {
-      .brief-hero,
-      .two-col,
-      .steps {
-        grid-template-columns: 1fr;
-      }
+      font-weight: 700;
     }
 
     @media (max-width: 760px) {
-      main { width: min(100vw - 28px, 1120px); }
-      .links,
-      .metrics { grid-template-columns: 1fr; }
+      main { width: min(100vw - 28px, 920px); }
+      .links { grid-template-columns: 1fr; }
     }
   </style>
 </head>
 <body>
   <main>
     <header>
-      <p class="eyebrow">Findings brief</p>
       <h1>Finding Counties Missed by Infrastructure-Only Medicaid Access Screening</h1>
       <p class="summary">
-        A policy-facing summary of what the Postpartum Medicaid Access Barrier Index adds beyond looking only for the most obvious local infrastructure gaps.
-      </p>
-      <p class="summary">
-        <strong>Research question:</strong> Where may postpartum Medicaid populations face overlapping administrative, clinical, and contextual access barriers, and which counties would be missed by a screen focused only on Medicaid office and hospital-based obstetric care gaps?
+        Findings brief for the Postpartum Medicaid Access Barrier Index.
       </p>
       <nav class="links" aria-label="Project links">
         <a href="index.html">1. Review Dashboard</a>
@@ -289,119 +176,103 @@
       <a class="download" href="assets/findings-brief.pdf">Download PDF Brief</a>
     </header>
 
-    <section class="brief-hero">
-      <div class="lead-card">
-        <h2>Main Finding</h2>
-        <p>
-          A screen that only looks for counties with both no Medicaid office and no hospital-based obstetric care identifies many high-concern counties, but it misses a substantial group where one infrastructure gap overlaps with multiple contextual barriers.
-        </p>
-        <p>
-          The index's main contribution is identifying those otherwise-missed counties and showing why they may still warrant closer policy and program review.
-        </p>
-      </div>
+    <article>
+      <p>
+        <strong>Research question:</strong> Where may postpartum Medicaid populations face overlapping administrative, clinical, and contextual access barriers, and which counties would be missed by a screen focused only on Medicaid office and hospital-based obstetric care gaps?
+      </p>
 
-      <div class="definition-card">
-        <h2>What is an infrastructure-only screen?</h2>
-        <p>
-          In this brief, an <strong>infrastructure-only screen</strong> means looking only for counties with both major local infrastructure gaps: no Medicaid office and no hospital-based obstetric care. More precisely, it is a <strong>dual-gap infrastructure screen</strong>.
-        </p>
-      </div>
-    </section>
+      <h2>Main Finding</h2>
+      <p>
+        An <strong>infrastructure-only screen</strong> looks for counties with both major local infrastructure gaps: no Medicaid office and no hospital-based obstetric care. More precisely, this is a <strong>dual-gap infrastructure screen</strong> because it only flags counties missing both forms of local infrastructure.
+      </p>
+      <p class="key-line">
+        279 high/highest concern counties were missed by the dual-gap infrastructure screen.
+      </p>
 
-    <section class="metrics" aria-label="Key finding metrics">
-      <div class="metric">
-        <strong>665</strong>
-        <span>counties classified as high or highest concern</span>
-      </div>
-      <div class="metric">
-        <strong>386</strong>
-        <span>captured by dual-gap infrastructure screen (58.0%)</span>
-      </div>
-      <div class="metric">
-        <strong>279</strong>
-        <span>missed by dual-gap infrastructure screen (42.0%)</span>
-      </div>
-    </section>
+      <table>
+        <thead>
+          <tr>
+            <th>Measure</th>
+            <th>Result</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Counties classified as high or highest concern</td>
+            <td>665</td>
+          </tr>
+          <tr>
+            <td>Captured by dual-gap infrastructure screen</td>
+            <td>386 / 665, 58.0%</td>
+          </tr>
+          <tr>
+            <td>Missed by dual-gap infrastructure screen</td>
+            <td>279 / 665, 42.0%</td>
+          </tr>
+        </tbody>
+      </table>
 
-    <section class="section">
-      <h2>Why the missed counties matter</h2>
       <p>
         The missed counties were not low-burden outliers. They had an average score of 6.46 and an average contextual support-burden score of 4.56. Most were nonmetro, and large shares had high poverty, high no-internet rates, high disability rates, or high no-vehicle household rates.
       </p>
-    </section>
 
-    <section class="section">
-      <h2>What the index adds</h2>
-      <div class="two-col">
-        <div class="card">
-          <h3>It separates types of access gaps</h3>
-          <p>
-            The index distinguishes administrative access, clinical maternity infrastructure, and contextual access-support burden instead of collapsing them into one unexplained ranking.
-          </p>
-        </div>
-        <div class="card">
-          <h3>It finds one-gap counties with high context burden</h3>
-          <p>
-            A county with only one infrastructure gap may still warrant review when that gap overlaps with poverty, transportation barriers, digital access barriers, language access needs, disability context, reproductive-age population context, or rurality.
-          </p>
-        </div>
-      </div>
+      <h2>What the Index Adds</h2>
+      <p>
+        The index does not only ask whether a county has both major infrastructure gaps. It distinguishes administrative access, clinical maternity infrastructure, and access-support burden.
+      </p>
       <p>
         In other words, the index helps confirm where additional barriers matter within counties that would otherwise appear less urgent under a dual-gap-only screen.
       </p>
-    </section>
 
-    <section class="section">
-      <h2>Practical review sequence</h2>
-      <div class="steps">
-        <div class="step">
-          <span class="step-number">1</span>
-          <h3>Start with highest-concern counties</h3>
-          <p>Review the 56 highest-concern counties first, including the 11 counties with the maximum observed score of 10.</p>
-        </div>
-        <div class="step">
-          <span class="step-number">2</span>
-          <h3>Review both-gap counties</h3>
-          <p>Counties with both no Medicaid office and no hospital-based obstetric care are the clearest infrastructure-gap counties.</p>
-        </div>
-        <div class="step">
-          <span class="step-number">3</span>
-          <h3>Review one-gap plus high-context counties</h3>
-          <p>These counties may not appear in an infrastructure-only screen but still have multiple access-support barriers.</p>
-        </div>
-        <div class="step">
-          <span class="step-number">4</span>
-          <h3>Review contextual-burden watchlist counties</h3>
-          <p>A smaller group reaches high concern through contextual burden without either direct infrastructure gap.</p>
-        </div>
-      </div>
-    </section>
+      <h2>Score Design</h2>
+      <p>
+        The Postpartum Medicaid Access Barrier Index is a transparent county-level screening score. The theoretical score range is 0-11, and observed county scores ranged from 0 to 10.
+      </p>
+      <table>
+        <thead>
+          <tr>
+            <th>Component group</th>
+            <th>Fields</th>
+            <th>Points</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Infrastructure gaps</td>
+            <td>No Medicaid office in county; no hospital-based obstetric care</td>
+            <td>2 points each</td>
+          </tr>
+          <tr>
+            <td>Contextual flags</td>
+            <td>Poverty; no vehicle; no internet; limited English; disability; female ages 15-44; nonmetro county status</td>
+            <td>1 point each</td>
+          </tr>
+        </tbody>
+      </table>
 
-    <section class="section">
-      <h2>Applied screening rule</h2>
-      <div class="rule">
-        <p>
-          Among the 279 high/highest concern counties missed by the infrastructure-only screen, a rule requiring one infrastructure gap plus at least four contextual flags recovered 265 counties, or 95.0%, with 100.0% precision.
-        </p>
-      </div>
-    </section>
+      <h2>Practical Review Sequence</h2>
+      <ol>
+        <li><strong>Start with highest-concern counties.</strong> Review the 56 highest-concern counties first, including the 11 counties with the maximum observed score of 10.</li>
+        <li><strong>Review counties with both infrastructure gaps.</strong> Counties with both no Medicaid office and no hospital-based obstetric care are the clearest infrastructure-gap counties.</li>
+        <li><strong>Review one-gap plus high-context counties.</strong> These counties may not appear in an infrastructure-only screen but still have multiple access-support barriers.</li>
+        <li><strong>Review contextual-burden watchlist counties.</strong> A smaller group reaches high concern through contextual burden without either direct infrastructure gap.</li>
+      </ol>
 
-    <section class="section">
-      <h2>Geographic pattern</h2>
+      <h2>Applied Screening Rule</h2>
+      <p>
+        Among the 279 high/highest concern counties missed by the infrastructure-only screen, a rule requiring <strong>one infrastructure gap plus at least four contextual flags</strong> recovered 265 counties, or 95.0%, with 100.0% precision.
+      </p>
+
+      <h2>Geographic Pattern</h2>
       <p>
         High scores were concentrated in the South, parts of the Southwest, and Alaska. Mississippi had the highest average county score and the highest share of high/highest concern counties. Texas had the largest number of high/highest concern counties.
       </p>
-      <p>
-        These patterns identify a geography for follow-up analysis using Medicaid enrollment, renewal, churn, coverage continuity, and postpartum care data.
-      </p>
-    </section>
 
-    <section class="section">
-      <h2>Bottom line</h2>
+      <h2>Bottom Line</h2>
       <p>
         The most obvious infrastructure gaps are only part of the access-burden picture. The index provides a transparent way to identify counties that may be overlooked by simpler Medicaid access screens and to show where additional barriers make those counties worth closer review.
       </p>
-    </section>
+    </article>
 
     <footer>
       Caroline Howard | Prashant Shekhar<br>
