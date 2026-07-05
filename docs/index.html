@@ -66,16 +66,17 @@
     }
 
     .links {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
       margin-top: 18px;
     }
 
     .links a {
-      min-height: 40px;
+      min-height: 52px;
       display: inline-flex;
       align-items: center;
+      justify-content: center;
       padding: 0 14px;
       border: 1px solid var(--navy);
       border-radius: 4px;
@@ -84,6 +85,7 @@
       text-decoration: none;
       font-weight: 760;
       font-size: 0.94rem;
+      text-align: center;
     }
 
     .demo {
@@ -117,8 +119,23 @@
       background: #edf6f8;
     }
 
+    footer {
+      margin-top: 42px;
+      padding-top: 20px;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 0.94rem;
+      line-height: 1.5;
+    }
+
+    footer a {
+      color: var(--navy);
+      font-weight: 760;
+    }
+
     @media (max-width: 760px) {
       main { width: min(100vw - 28px, 1080px); }
+      .links { grid-template-columns: 1fr; }
     }
   </style>
 </head>
@@ -130,13 +147,12 @@
         Power BI dashboard preview for a county-level screening index of overlapping administrative, clinical, and access-support barriers relevant to postpartum Medicaid access.
       </p>
       <p class="question">
-        <strong>Research question:</strong> Which counties may have overlapping administrative, clinical, and access-support barriers relevant to postpartum Medicaid access?
+        <strong>Research question:</strong> Where may postpartum Medicaid populations face greater administrative access barriers to maintaining coverage and navigating support after delivery?
       </p>
       <nav class="links" aria-label="Project links">
-        <a href="index.html">Dashboard</a>
-        <a href="findings-brief.html">Findings Brief</a>
-        <a href="assets/technical-report.pdf">Technical Report</a>
-        <a href="https://github.com/caroline-howard/medicaid-access-barriers-powerbi">GitHub Repo</a>
+        <a href="index.html">1. Review Dashboard</a>
+        <a href="findings-brief.html">2. Review Findings Brief</a>
+        <a href="assets/technical-report.pdf">3. Review Technical Report</a>
       </nav>
     </header>
 
@@ -172,6 +188,10 @@
         </video>
       </div>
     </section>
+    <footer>
+      Caroline Howard | Prashant Shekhar<br>
+      <a href="https://github.com/caroline-howard/medicaid-access-barriers-powerbi">GitHub repository</a>
+    </footer>
   </main>
 </body>
 </html>

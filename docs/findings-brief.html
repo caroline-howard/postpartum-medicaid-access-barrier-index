@@ -52,16 +52,17 @@
     }
 
     .links {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
       margin-top: 18px;
     }
 
     .links a {
-      min-height: 40px;
+      min-height: 52px;
       display: inline-flex;
       align-items: center;
+      justify-content: center;
       padding: 0 14px;
       border: 1px solid var(--navy);
       border-radius: 4px;
@@ -70,6 +71,7 @@
       text-decoration: none;
       font-weight: 760;
       font-size: 0.94rem;
+      text-align: center;
     }
 
     .pdf-frame {
@@ -86,8 +88,23 @@
       background: var(--panel);
     }
 
+    footer {
+      margin-top: 42px;
+      padding-top: 20px;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 0.94rem;
+      line-height: 1.5;
+    }
+
+    footer a {
+      color: var(--navy);
+      font-weight: 760;
+    }
+
     @media (max-width: 760px) {
       main { width: min(100vw - 28px, 1080px); }
+      .links { grid-template-columns: 1fr; }
       iframe { height: 640px; }
     }
   </style>
@@ -100,17 +117,19 @@
         Policy-facing brief for the Postpartum Medicaid Access Barrier Index.
       </p>
       <nav class="links" aria-label="Project links">
-        <a href="index.html">Dashboard</a>
-        <a href="findings-brief.html">Findings Brief</a>
-        <a href="assets/technical-report.pdf">Technical Report</a>
-        <a href="https://github.com/caroline-howard/medicaid-access-barriers-powerbi">GitHub Repo</a>
-        <a href="assets/findings-brief.pdf">Open PDF</a>
+        <a href="index.html">1. Review Dashboard</a>
+        <a href="findings-brief.html">2. Review Findings Brief</a>
+        <a href="assets/technical-report.pdf">3. Review Technical Report</a>
       </nav>
     </header>
 
     <div class="pdf-frame">
       <iframe src="assets/findings-brief.pdf" title="Findings brief PDF"></iframe>
     </div>
+    <footer>
+      Caroline Howard | Prashant Shekhar<br>
+      <a href="https://github.com/caroline-howard/medicaid-access-barriers-powerbi">GitHub repository</a>
+    </footer>
   </main>
 </body>
 </html>
