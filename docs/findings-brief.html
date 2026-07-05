@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Findings Brief | Postpartum Medicaid Access Barrier Dashboard</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --navy: #073763;
+      --ink: #1f2a37;
+      --muted: #5f6f7d;
+      --line: #d9e3ec;
+      --panel: #ffffff;
+      --page: #f7fafc;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--ink);
+      background: var(--page);
+    }
+
+    main {
+      width: min(1080px, calc(100vw - 40px));
+      margin: 0 auto;
+      padding: 32px 0 56px;
+    }
+
+    header {
+      padding-bottom: 22px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    h1 {
+      margin: 0;
+      color: var(--navy);
+      font-size: clamp(2rem, 4.4vw, 3.6rem);
+      line-height: 1;
+      letter-spacing: 0;
+    }
+
+    .summary {
+      max-width: 820px;
+      margin: 14px 0 0;
+      color: var(--muted);
+      font-size: 1.04rem;
+      line-height: 1.55;
+    }
+
+    .links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    .links a {
+      min-height: 40px;
+      display: inline-flex;
+      align-items: center;
+      padding: 0 14px;
+      border: 1px solid var(--navy);
+      border-radius: 4px;
+      color: var(--navy);
+      background: var(--panel);
+      text-decoration: none;
+      font-weight: 760;
+      font-size: 0.94rem;
+    }
+
+    .pdf-frame {
+      margin-top: 24px;
+      border: 1px solid var(--line);
+      background: var(--panel);
+    }
+
+    iframe {
+      display: block;
+      width: 100%;
+      height: 780px;
+      border: 0;
+      background: var(--panel);
+    }
+
+    @media (max-width: 760px) {
+      main { width: min(100vw - 28px, 1080px); }
+      iframe { height: 640px; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <h1>Findings Brief</h1>
+      <p class="summary">
+        Policy-facing brief for the Postpartum Medicaid Access Barrier Index.
+      </p>
+      <nav class="links" aria-label="Project links">
+        <a href="index.html">Dashboard</a>
+        <a href="findings-brief.html">Findings Brief</a>
+        <a href="assets/technical-report.pdf">Technical Report</a>
+        <a href="https://github.com/caroline-howard/medicaid-access-barriers-powerbi">GitHub Repo</a>
+        <a href="assets/findings-brief.pdf">Open PDF</a>
+      </nav>
+    </header>
+
+    <div class="pdf-frame">
+      <iframe src="assets/findings-brief.pdf" title="Findings brief PDF"></iframe>
+    </div>
+  </main>
+</body>
+</html>
