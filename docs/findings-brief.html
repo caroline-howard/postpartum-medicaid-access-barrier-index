@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Findings Brief | Postpartum Medicaid Access Barrier Dashboard</title>
+  <title>Findings Brief | Postpartum Medicaid Access Barrier Index</title>
   <style>
     :root {
       color-scheme: light;
@@ -13,6 +13,7 @@
       --line: #d9e3ec;
       --panel: #ffffff;
       --page: #f7fafc;
+      --accent: #a73361;
     }
 
     * { box-sizing: border-box; }
@@ -43,12 +44,30 @@
       letter-spacing: 0;
     }
 
-    .summary {
-      max-width: 820px;
-      margin: 14px 0 0;
+    h2 {
+      margin: 34px 0 10px;
+      color: var(--navy);
+      font-size: 1.55rem;
+      line-height: 1.2;
+    }
+
+    h3 {
+      margin: 22px 0 8px;
+      color: var(--navy);
+      font-size: 1.1rem;
+    }
+
+    p {
+      margin: 0 0 14px;
       color: var(--muted);
+      font-size: 1rem;
+      line-height: 1.6;
+    }
+
+    .summary {
+      max-width: 850px;
+      margin-top: 14px;
       font-size: 1.04rem;
-      line-height: 1.55;
     }
 
     .links {
@@ -58,7 +77,8 @@
       margin-top: 18px;
     }
 
-    .links a {
+    .links a,
+    .download {
       min-height: 52px;
       display: inline-flex;
       align-items: center;
@@ -74,18 +94,65 @@
       text-align: center;
     }
 
-    .pdf-frame {
-      margin-top: 24px;
-      border: 1px solid var(--line);
+    .brief {
+      max-width: 900px;
+      margin-top: 30px;
+      padding: 28px;
       background: var(--panel);
+      border: 1px solid var(--line);
+      box-shadow: 0 12px 28px rgba(7, 55, 99, 0.07);
     }
 
-    iframe {
+    .callout {
+      margin: 22px 0;
+      padding: 18px 20px;
+      border-left: 5px solid var(--accent);
+      background: #fbf4f7;
+    }
+
+    .callout p {
+      color: var(--ink);
+      margin: 0;
+      font-weight: 650;
+    }
+
+    ul, ol {
+      margin: 0 0 16px;
+      padding-left: 1.3rem;
+      color: var(--muted);
+      line-height: 1.55;
+    }
+
+    li + li {
+      margin-top: 6px;
+    }
+
+    .metric-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+      margin: 18px 0 20px;
+    }
+
+    .metric {
+      padding: 14px;
+      border: 1px solid var(--line);
+      background: var(--page);
+    }
+
+    .metric strong {
       display: block;
-      width: 100%;
-      height: 780px;
-      border: 0;
-      background: var(--panel);
+      color: var(--navy);
+      font-size: 1.7rem;
+      line-height: 1;
+    }
+
+    .metric span {
+      display: block;
+      margin-top: 6px;
+      color: var(--muted);
+      font-size: 0.9rem;
+      line-height: 1.35;
     }
 
     footer {
@@ -104,8 +171,9 @@
 
     @media (max-width: 760px) {
       main { width: min(100vw - 28px, 1080px); }
-      .links { grid-template-columns: 1fr; }
-      iframe { height: 640px; }
+      .links,
+      .metric-grid { grid-template-columns: 1fr; }
+      .brief { padding: 20px; }
     }
   </style>
 </head>
@@ -114,7 +182,7 @@
     <header>
       <h1>Findings Brief</h1>
       <p class="summary">
-        Policy-facing brief for the Postpartum Medicaid Access Barrier Index.
+        A policy-facing summary of the county-level Postpartum Medicaid Access Barrier Index and what it adds beyond basic infrastructure screening.
       </p>
       <nav class="links" aria-label="Project links">
         <a href="index.html">1. Review Dashboard</a>
@@ -123,9 +191,125 @@
       </nav>
     </header>
 
-    <div class="pdf-frame">
-      <iframe src="assets/findings-brief.pdf" title="Findings brief PDF"></iframe>
-    </div>
+    <article class="brief">
+      <a class="download" href="assets/findings-brief.pdf">Download PDF Brief</a>
+
+      <h2>Finding Counties Missed by Infrastructure-Only Medicaid Access Screening</h2>
+      <p>
+        Postpartum Medicaid access is often discussed through coverage policy: eligibility, renewal, and postpartum coverage duration. But coverage continuity also depends on whether people can navigate administrative systems, reach in-person support, access digital tools, travel to care, and find local maternity care infrastructure.
+      </p>
+      <p>
+        This project develops a county-level screening index to identify where those barriers may overlap.
+      </p>
+
+      <div class="callout">
+        <p>Research question: Where may postpartum Medicaid populations face greater administrative access barriers to maintaining coverage and navigating support after delivery?</p>
+      </div>
+
+      <h2>Main Finding</h2>
+      <p>
+        An <strong>infrastructure-only screen</strong> looks for counties with both major local infrastructure gaps: no Medicaid office and no hospital-based obstetric care. This screen identifies many high-concern counties, but it is incomplete.
+      </p>
+
+      <div class="metric-grid">
+        <div class="metric">
+          <strong>665</strong>
+          <span>counties classified as high or highest concern</span>
+        </div>
+        <div class="metric">
+          <strong>386</strong>
+          <span>high/highest counties captured by the infrastructure-only screen</span>
+        </div>
+        <div class="metric">
+          <strong>279</strong>
+          <span>high/highest counties missed by the infrastructure-only screen</span>
+        </div>
+      </div>
+
+      <p>
+        The missed counties were not low-burden outliers. They had an average score of 6.46 and an average contextual support-burden score of 4.56. Most were nonmetro, and large shares had high poverty, high no-internet rates, high disability rates, or high no-vehicle household rates.
+      </p>
+      <p>
+        The index's main contribution is identifying these otherwise-missed counties and showing why they may still warrant review.
+      </p>
+
+      <h2>What the Index Adds</h2>
+      <p>
+        The index does not only ask whether a county has both major infrastructure gaps. It asks whether a county has overlapping barriers across three domains:
+      </p>
+      <ol>
+        <li><strong>Administrative access:</strong> whether the county has a Medicaid office.</li>
+        <li><strong>Clinical maternity infrastructure:</strong> whether the county has hospital-based obstetric care.</li>
+        <li><strong>Access-support burden:</strong> whether contextual barriers may make administrative or clinical gaps harder to navigate.</li>
+      </ol>
+      <p>
+        This matters because a county with only one infrastructure gap may still face substantial access burden if that gap overlaps with poverty, transportation barriers, digital access barriers, limited English access needs, disability-related support context, reproductive-age population context, or rurality.
+      </p>
+
+      <h2>How the Score Works</h2>
+      <p>
+        The Postpartum Medicaid Access Barrier Index is a transparent county-level screening score. The theoretical score range is 0-11, and observed county scores ranged from 0 to 10.
+      </p>
+      <ul>
+        <li>No Medicaid office in county = 2 points.</li>
+        <li>No hospital-based obstetric care = 2 points.</li>
+        <li>Top quartile poverty rate = 1 point.</li>
+        <li>Top quartile no-vehicle household rate = 1 point.</li>
+        <li>Top quartile no-internet subscription rate = 1 point.</li>
+        <li>Top quartile limited English rate = 1 point.</li>
+        <li>Top quartile disability rate = 1 point.</li>
+        <li>Top quartile female population ages 15-44 rate = 1 point.</li>
+        <li>Nonmetro county status = 1 point.</li>
+      </ul>
+
+      <h2>A Practical Review Sequence</h2>
+      <h3>1. Start with highest-concern counties</h3>
+      <p>
+        The first review group is the 56 highest-concern counties. Within that group, 11 counties reached the maximum observed score of 10.
+      </p>
+      <h3>2. Review counties with both infrastructure gaps</h3>
+      <p>
+        Counties with both no Medicaid office and no hospital-based obstetric care are the clearest infrastructure-gap counties.
+      </p>
+      <h3>3. Review one-gap plus high-context counties</h3>
+      <p>
+        The most important added-value group is counties with one direct infrastructure gap plus multiple contextual barriers. These counties may not appear in an infrastructure-only screen, but they may still warrant review.
+      </p>
+      <h3>4. Review contextual-burden watchlist counties</h3>
+      <p>
+        A smaller group of counties reached high concern through contextual burden without either direct infrastructure gap. These counties may warrant review when the goal is to understand broader access-support burden.
+      </p>
+
+      <h2>Applied Screening Rule</h2>
+      <p>
+        Among the 279 high/highest concern counties missed by the infrastructure-only screen, a rule requiring <strong>one infrastructure gap plus at least four contextual flags</strong> recovered 265 counties, or 95.0%, with 100.0% precision.
+      </p>
+      <p>
+        This finding supports the two-layer structure of the index. Direct infrastructure gaps matter, but contextual burden helps identify which one-gap counties may deserve closer review.
+      </p>
+
+      <h2>Geographic Patterns</h2>
+      <p>
+        High scores were concentrated in the South, parts of the Southwest, and Alaska. Mississippi had the highest average county score and the highest share of high/highest concern counties. Texas had the largest number of high/highest concern counties.
+      </p>
+      <p>
+        These patterns identify a geography for follow-up analysis using Medicaid enrollment, renewal, churn, coverage continuity, and postpartum care data.
+      </p>
+
+      <h2>Dashboard Translation</h2>
+      <p>
+        The Power BI dashboard translates the index into a public review tool. Users can examine county-level scores, concern categories, ranked county lists, state comparisons, administrative versus clinical infrastructure gaps, and component-level score drivers.
+      </p>
+
+      <h2>Bottom Line</h2>
+      <p>
+        The Postpartum Medicaid Access Barrier Index shows that the most obvious infrastructure gaps are only part of the access-burden picture. An infrastructure-only screen captured many high-concern counties, but it missed 279 high/highest concern counties. Most of those missed counties had one infrastructure gap plus multiple contextual barriers.
+      </p>
+      <p>
+        The central contribution of the index is that it provides a transparent way to identify counties that may be overlooked by simpler Medicaid access screens and to show where additional barriers make those counties worth closer policy and program review.
+      </p>
+    </article>
+
     <footer>
       Caroline Howard | Prashant Shekhar<br>
       Data documentation, processing scripts, dashboard assets, and report materials are available in the
