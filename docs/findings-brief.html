@@ -69,7 +69,7 @@
     }
 
     .page-label {
-      margin: 0 0 18px;
+      margin: 0;
       color: var(--navy);
       font-size: 1.35rem;
       font-weight: 750;
@@ -77,10 +77,6 @@
     }
 
     .header-actions {
-      display: grid;
-      grid-template-columns: minmax(0, 1fr) auto;
-      gap: 14px;
-      align-items: start;
       margin-top: 18px;
     }
 
@@ -120,6 +116,29 @@
       font-weight: 700;
       font-size: 0.85rem;
       white-space: nowrap;
+    }
+
+    .brief-title-block {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 16px;
+      align-items: start;
+      margin-bottom: 24px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .brief-title-label {
+      margin: 0 0 6px;
+      color: var(--muted);
+      font-size: 0.82rem;
+      font-weight: 800;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .brief-content {
+      margin-top: 0;
     }
 
     article {
@@ -183,8 +202,8 @@
 
     @media (max-width: 760px) {
       main { width: min(100vw - 28px, 920px); }
-      .header-actions { grid-template-columns: 1fr; }
       .links { grid-template-columns: 1fr; }
+      .brief-title-block { grid-template-columns: 1fr; }
       .download { width: fit-content; }
     }
   </style>
@@ -199,17 +218,24 @@
           <a href="findings-brief.html">2. Findings Brief</a>
           <a href="assets/technical-report.pdf">3. Technical Report</a>
         </nav>
-        <a class="download" href="assets/findings-brief.pdf">Download PDF</a>
       </div>
     </header>
 
     <article>
-      <p class="page-label">
-        Findings Brief: Identifying Counties with Overlapping Postpartum Medicaid Access Barriers
-      </p>
-      <p>
-        <strong>Research question:</strong> Where may postpartum Medicaid populations face overlapping administrative, clinical, and contextual access barriers, and which counties would be missed by a screen focused only on Medicaid office and hospital-based obstetric care gaps?
-      </p>
+      <div class="brief-title-block">
+        <div>
+          <p class="brief-title-label">Brief Title</p>
+          <p class="page-label">
+            Findings Brief: Identifying Counties with Overlapping Postpartum Medicaid Access Barriers
+          </p>
+        </div>
+        <a class="download" href="assets/findings-brief.pdf">Download PDF</a>
+      </div>
+
+      <section class="brief-content" aria-label="Findings brief">
+        <p>
+          <strong>Research question:</strong> Where may postpartum Medicaid populations face overlapping administrative, clinical, and contextual access barriers, and which counties would be missed by a screen focused only on Medicaid office and hospital-based obstetric care gaps?
+        </p>
 
       <h2>Why This Matters</h2>
       <p>
@@ -310,6 +336,7 @@
       <p>
         The most obvious infrastructure gaps are only part of the access-burden picture. The index provides a transparent way to identify counties that may be overlooked by simpler Medicaid access screens and to show where additional barriers make those counties worth closer review.
       </p>
+      </section>
     </article>
 
     <footer>
