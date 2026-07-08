@@ -44,6 +44,15 @@
       letter-spacing: 0;
     }
 
+    .subtitle {
+      max-width: 820px;
+      margin: 8px 0 0;
+      color: var(--navy);
+      font-size: 1.18rem;
+      font-weight: 760;
+      line-height: 1.35;
+    }
+
     .summary {
       max-width: 820px;
       margin: 14px 0 0;
@@ -87,6 +96,40 @@
       font-weight: 760;
       font-size: 0.94rem;
       text-align: center;
+    }
+
+    .contribution {
+      margin-top: 26px;
+      padding: 18px;
+      border: 1px solid var(--line);
+      background: var(--panel);
+    }
+
+    .contribution h2 {
+      margin: 0 0 12px;
+      color: var(--navy);
+      font-size: 1.25rem;
+      line-height: 1.25;
+    }
+
+    .contribution ul {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .contribution li {
+      color: var(--ink);
+      line-height: 1.45;
+    }
+
+    .contribution strong {
+      display: block;
+      margin-bottom: 4px;
+      color: var(--navy);
     }
 
     .demo {
@@ -137,18 +180,20 @@
     @media (max-width: 760px) {
       main { width: min(100vw - 28px, 1080px); }
       .links { grid-template-columns: 1fr; }
+      .contribution ul { grid-template-columns: 1fr; }
     }
   </style>
 </head>
 <body>
   <main>
     <header>
-      <h1>Development and Internal Validation of a County-Level Screening Index for Postpartum Medicaid Access Barriers</h1>
+      <h1>Postpartum Medicaid Access Barrier Index</h1>
+      <p class="subtitle">Development and internal validation of a county-level screening index</p>
       <p class="summary">
-        Power BI dashboard preview for a county-level screening index of overlapping administrative, clinical, and access-support barriers relevant to postpartum Medicaid access.
+        Project site for a county-level screening index of overlapping administrative, clinical, and access-support barriers relevant to postpartum Medicaid access.
       </p>
       <p class="question">
-        <strong>Research question:</strong> Where may postpartum Medicaid populations face greater administrative access barriers to maintaining coverage and navigating support after delivery?
+        <strong>Research question:</strong> Where may postpartum Medicaid populations face overlapping administrative, clinical, and contextual access barriers, and which counties does the full index surface beyond a screen focused only on Medicaid office and hospital-based obstetric care gaps?
       </p>
       <nav class="links" aria-label="Project links">
         <a href="index.html">1. Dashboard</a>
@@ -156,6 +201,15 @@
         <a href="https://www.medrxiv.org/content/10.64898/2026.07.05.26357332v1">3. Technical Report</a>
       </nav>
     </header>
+
+    <section class="contribution" aria-labelledby="contribution-heading">
+      <h2 id="contribution-heading">What This Project Contributes</h2>
+      <ul>
+        <li><strong>Index</strong>A transparent county-level score combining Medicaid office availability, hospital-based obstetric care status, ACS access indicators, and rural-urban context.</li>
+        <li><strong>Main Finding</strong>The full index identifies high-burden counties where contextual barriers elevate concern beyond what infrastructure gaps alone would show.</li>
+        <li><strong>How To Review</strong>Use the dashboard for visual exploration, the findings brief for a concise stakeholder summary, and the technical manuscript for methods and validation.</li>
+      </ul>
+    </section>
 
     <section class="demo">
       <h2>National Postpartum Medicaid Access Overview</h2>
